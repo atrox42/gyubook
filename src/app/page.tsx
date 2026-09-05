@@ -1,13 +1,22 @@
-import { Hero } from "@/components/Hero";
-import { Lookbook } from "@/components/Lookbook";
-import { SiteFooter } from "@/components/SiteFooter";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { EditorialGrid } from "@/components/EditorialGrid";
+import { looks } from "@/data/looks";
+import type { Look } from "@/types/look";
+
+function publicExists(src: string) {
+  return existsSync(path.join(process.cwd(), "public", src.replace(/^\//, "")));
+}
+
+function availableLooks(): Look[] {
+  return looks
+    .map((look) => ({
+      ...look,
+      tiles: look.tiles.filter((tile) => publicExists(tile.src)),
+    }))
+    .filter((look) => look.tiles.length > 0 && publicExists(look.image));
+}
 
 export default function Home() {
-  return (
-    <main>
-      <Hero />
-      <Lookbook />
-      <SiteFooter />
-    </main>
-  );
+  return <EditorialGrid looks={availableLooks()} />;
 }

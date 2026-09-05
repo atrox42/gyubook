@@ -1,34 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, IBM_Plex_Mono, IBM_Plex_Sans_KR, Noto_Serif_KR } from "next/font/google";
-import { CustomCursor } from "@/components/CustomCursor";
+import { Geist, Noto_Sans_KR } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const sans = IBM_Plex_Sans_KR({
+const geist = Geist({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-sans-kr",
+  variable: "--font-geist",
   display: "swap",
 });
 
-const serif = Noto_Serif_KR({
+const sansKr = Noto_Sans_KR({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-serif-kr",
-  display: "swap",
-});
-
-const display = Fraunces({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-display-en",
-  display: "swap",
-});
-
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-hud",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -70,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0d0a",
+  themeColor: "#f6f5f1",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -80,14 +64,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ko"
-      className={`${sans.variable} ${serif.variable} ${display.variable} ${mono.variable} h-full antialiased`}
+      className={`${geist.variable} ${sansKr.variable} h-full antialiased`}
     >
-      <body className="min-h-full">
-        <div className="film-grain" aria-hidden />
-        <div className="scanlines" aria-hidden />
-        <CustomCursor />
-        {children}
-      </body>
+      <body className="min-h-full bg-paper text-ink">{children}</body>
     </html>
   );
 }

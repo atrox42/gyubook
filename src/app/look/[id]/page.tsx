@@ -1,11 +1,19 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LookDetail } from "@/components/LookDetail";
 import { getAdjacentLooks, getLook, looks } from "@/data/looks";
 import { site } from "@/lib/site";
 
+function publicExists(src: string) {
+  return existsSync(path.join(process.cwd(), "public", src.replace(/^\//, "")));
+}
+
 export function generateStaticParams() {
-  return looks.map((look) => ({ id: look.id }));
+  return looks
+    .filter((look) => publicExists(look.image))
+    .map((look) => ({ id: look.id }));
 }
 
 export const dynamicParams = false;

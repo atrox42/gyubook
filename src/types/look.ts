@@ -9,6 +9,18 @@ export type Product = {
   hotspot?: { x: number; y: number };
 };
 
+export type LookAngle = "front" | "left" | "right" | "back";
+
+export type LookTile = {
+  id: string;
+  src: string;
+  alt: string;
+  aspect: "hero" | "portrait" | "square" | "detail";
+  position: string;
+  zoom?: number;
+  span: "hero" | "wide" | "normal";
+};
+
 export type Look = {
   id: string;
   title: string;
@@ -16,11 +28,6 @@ export type Look = {
   image: string;
   alt: string;
   products: Product[];
-  code: string;
-  location: string;
-  locationKo: string;
-  elevationM: number;
-  brief: string;
-  briefEn: string;
-  frame: "tall" | "classic" | "compact";
+  angles?: Partial<Record<LookAngle, string>>;
+  tiles: LookTile[];
 };

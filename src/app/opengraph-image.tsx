@@ -15,49 +15,24 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "linear-gradient(160deg, #1c2c20 0%, #0b0d0a 48%, #16110c 100%)",
-          color: "#e8e2d4",
+          background: "#f6f5f1",
+          color: "#161616",
           padding: "56px 64px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            fontSize: 18,
-            letterSpacing: "0.28em",
-            color: "#e4a85a",
-          }}
-        >
-          <span>FIELD ARCHIVE</span>
-          <span>VOL. 01</span>
+        <div style={{ fontSize: 18, letterSpacing: "0.28em", color: "#8a8680" }}>
+          FIELD ARCHIVE
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 96, letterSpacing: "0.12em", fontWeight: 600 }}>
+          <div style={{ fontSize: 88, letterSpacing: "0.18em", fontWeight: 500 }}>
             GYUBOOK
           </div>
-          <div
-            style={{
-              marginTop: 18,
-              fontSize: 28,
-              color: "#b7af9d",
-              letterSpacing: "0.06em",
-            }}
-          >
-            dawn ridge · damp trail · quiet focus
+          <div style={{ marginTop: 16, fontSize: 24, color: "#8a8680" }}>
+            hiking · trekking · trail running
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            fontSize: 18,
-            letterSpacing: "0.2em",
-            color: "#b7af9d",
-          }}
-        >
-          <span>HIKING / TREKKING / TRAIL RUN</span>
-          <span>LOOKBOOK</span>
+        <div style={{ fontSize: 18, letterSpacing: "0.2em", color: "#8a8680" }}>
+          LOOKBOOK
         </div>
       </div>
     ),

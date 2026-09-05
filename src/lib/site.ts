@@ -3,8 +3,8 @@ export const site = {
   nameKo: "규북",
   title: "GYUBOOK — 필드 아카이브",
   description:
-    "새벽 능선, 젖은 흙, 조용한 집중. 하이킹 · 트레킹 · 트레일러닝 룩북.",
+    "하이킹 · 트레킹 · 트레일러닝 룩북. 흰 그리드에 전신과 디테일을 올린다.",
   descriptionEn:
-    "A sensory outdoor lookbook — hiking, trekking, trail running. Dawn ridge. Damp trail. Quiet focus.",
+    "An editorial outdoor lookbook — hiking, trekking, trail running. White grid. Full looks and quiet detail.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://gyubook.vercel.app",
 } as const;

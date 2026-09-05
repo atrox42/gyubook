@@ -3,12 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ACTIVITY_META, formatElevation } from "@/lib/activity";
-import type { Look } from "@/types/look";
-import { Hotspots } from "./Hotspots";
-import { HudCorners } from "./HudCorners";
-import { KstClock } from "./KstClock";
-import { LoadoutList } from "./LoadoutList";
+import { ACTIVITY_META } from "@/lib/activity";
+import type { Look, LookAngle } from "@/types/look";
+
+const ANGLE_LABEL: Record<LookAngle, string> = {
+  front: "FRONT",
+  left: "LEFT",
+  right: "RIGHT",
+  back: "BACK",
+};
 
 type LookDetailProps = {
   look: Look;
@@ -17,98 +20,114 @@ type LookDetailProps = {
 };
 
 export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
-  const [showTags, setShowTags] = useState(true);
+  const angles = (["front", "left", "right", "back"] as const).filter(
+    (angle) => look.angles?.[angle],
+  );
+  const [active, setActive] = useState<string>(
+    look.angles?.front ?? look.image,
+  );
   const activity = ACTIVITY_META[look.activity];
 
   return (
-    <div className="relative min-h-[100dvh] bg-ink">
-      <div className="absolute inset-3 z-20 hidden border border-white/8 lg:block">
-        <HudCorners />
-      </div>
+    <div className="min-h-[100dvh] bg-paper">
+      <header className="flex items-center justify-between border-b border-line px-4 py-3.5 sm:px-6">
+        <Link href="/" className="text-[13px] tracking-[0.04em] text-mute">
+          ← GYUBOOK
+        </Link>
+        <p className="text-[11px] tracking-[0.14em] text-mute">{activity.ko}</p>
+      </header>
 
-      <div className="grid min-h-[100dvh] lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
-        <section className="relative min-h-[62vh] lg:min-h-[100dvh]">
-          <Image
-            src={look.image}
-            alt={look.alt}
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 58vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/25 lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-ink/70" />
-          <HudCorners className="lg:hidden" />
-          <Hotspots products={look.products} visible={showTags} />
-
-          <div className="absolute top-0 right-0 left-0 z-30 flex items-start justify-between gap-3 px-4 pt-[max(1rem,env(safe-area-inset-top))] sm:px-6">
-            <Link
-              href="/#archive"
-              data-cursor="hover"
-              className="border border-paper/20 bg-ink/45 px-2.5 py-1.5 font-hud text-[10px] tracking-[0.2em] text-paper backdrop-blur-sm hover:border-amber hover:text-amber"
-            >
-              ← ARCHIVE
-            </Link>
-            <div className="text-right font-hud text-[10px] tracking-[0.18em] text-mist">
-              <KstClock />
-              <p className="mt-1 text-amber">{look.code}</p>
-            </div>
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(260px,0.7fr)] lg:py-12">
+        <section>
+          <div className="relative aspect-3/4 overflow-hidden bg-[#eeebe4]">
+            <Image
+              src={active}
+              alt={look.alt}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 55vw"
+              className="object-contain object-center"
+            />
           </div>
+          {angles.length > 0 ? (
+            <div className="mt-3 grid grid-cols-4 gap-2">
+              {angles.map((angle) => {
+                const src = look.angles?.[angle];
+                if (!src) return null;
+                const selected = active === src;
+                return (
+                  <button
+                    key={angle}
+                    type="button"
+                    onClick={() => setActive(src)}
+                    className={`relative aspect-3/4 overflow-hidden bg-[#eeebe4] ${
+                      selected ? "ring-1 ring-ink" : ""
+                    }`}
+                    aria-label={ANGLE_LABEL[angle]}
+                  >
+                    <Image
+                      src={src}
+                      alt={`${look.title} ${ANGLE_LABEL[angle]}`}
+                      fill
+                      className="object-contain"
+                      sizes="120px"
+                    />
+                    <span className="absolute bottom-1 left-1 text-[9px] tracking-[0.14em] text-mute">
+                      {ANGLE_LABEL[angle]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
         </section>
 
-        <aside className="relative z-10 flex flex-col border-t border-line bg-char/95 px-5 py-8 sm:px-8 lg:border-t-0 lg:pt-24">
-          <p className="font-hud text-[10px] tracking-[0.28em] text-amber">
-            MISSION FILE · {activity.en}
-          </p>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="border border-amber/40 px-1.5 py-0.5 font-hud text-[9px] tracking-[0.2em] text-amber">
-              {activity.ko}
-            </span>
-            <span className="font-hud text-[10px] tracking-[0.16em] text-mist">
-              {look.locationKo} · {look.location} · {formatElevation(look.elevationM)}
-            </span>
-          </div>
-          <h1 className="mt-4 font-serif-kr text-4xl text-paper sm:text-5xl">
-            {look.title}
-          </h1>
-          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-mist">
-            {look.brief}
-          </p>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-mist/70">
-            {look.briefEn}
-          </p>
+        <aside className="lg:pt-4">
+          <p className="text-[11px] tracking-[0.16em] text-mute">{activity.en}</p>
+          <h1 className="mt-2 text-3xl font-medium tracking-tight">{look.title}</h1>
+          <p className="mt-6 text-[11px] tracking-[0.16em] text-mute">WORN</p>
+          <ul className="mt-3 divide-y divide-line">
+            {look.products.map((product) => {
+              const row = (
+                <>
+                  <span>
+                    {product.brand ? (
+                      <span className="text-mute">{product.brand} </span>
+                    ) : null}
+                    {product.name}
+                  </span>
+                  <span className="text-[11px] tracking-[0.08em] text-mute">
+                    {product.category}
+                  </span>
+                </>
+              );
+              return (
+                <li key={product.id}>
+                  {product.href ? (
+                    <a
+                      href={product.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-baseline justify-between gap-4 py-3 text-[14px] hover:opacity-60"
+                    >
+                      {row}
+                    </a>
+                  ) : (
+                    <div className="flex items-baseline justify-between gap-4 py-3 text-[14px]">
+                      {row}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
 
-          <div className="mt-8 flex items-center justify-between gap-3 border-y border-line py-3">
-            <p className="font-hud text-[10px] tracking-[0.24em] text-amber">
-              LOADOUT · {String(look.products.length).padStart(2, "0")}
-            </p>
-            <button
-              type="button"
-              data-cursor="hover"
-              onClick={() => setShowTags((value) => !value)}
-              className="font-hud text-[10px] tracking-[0.18em] text-mist hover:text-amber"
-            >
-              {showTags ? "TAGS OFF" : "TAGS ON"}
-            </button>
-          </div>
-
-          <div className="mt-1 flex-1">
-            <LoadoutList products={look.products} visible variant="dossier" />
-          </div>
-
-          <nav className="mt-8 flex items-center justify-between gap-3 font-hud text-[10px] tracking-[0.2em]">
-            <Link
-              href={`/look/${prevId}`}
-              data-cursor="hover"
-              className="border border-line px-3 py-2 text-mist hover:border-amber hover:text-amber"
-            >
-              ← PREV
+          <nav className="mt-10 flex justify-between text-[12px] tracking-[0.08em] text-mute">
+            <Link href={`/look/${prevId}`} className="hover:text-ink">
+              ← Prev
             </Link>
-            <Link
-              href={`/look/${nextId}`}
-              data-cursor="hover"
-              className="border border-line px-3 py-2 text-mist hover:border-amber hover:text-amber"
-            >
-              NEXT →
+            <Link href={`/look/${nextId}`} className="hover:text-ink">
+              Next →
             </Link>
           </nav>
         </aside>
