@@ -88,11 +88,18 @@ export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
             {look.products.map((product) => {
               const row = (
                 <>
-                  <span className="text-[14px] font-light">
-                    {product.brand ? `${product.brand} ` : ""}
-                    {product.name}
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-light">
+                      {product.brand ? `${product.brand} ` : ""}
+                      {product.name}
+                    </span>
+                    {product.sku ? (
+                      <span className="mt-0.5 block text-[10px] font-light tracking-[0.06em] text-mute">
+                        {product.sku}
+                      </span>
+                    ) : null}
                   </span>
-                  <span className="text-[11px] font-light text-mute">
+                  <span className="shrink-0 text-[11px] font-light text-mute">
                     {product.category}
                   </span>
                 </>

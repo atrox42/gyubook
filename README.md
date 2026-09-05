@@ -21,27 +21,39 @@ npm run build
 
 ## 룩 추가하는 법 / Add a look
 
-각 룩은 **전후좌우 4장**.
+**add a look = drop 4 angles → bg remove → data entry.**
 
-1. 원본 4장을 넣는다.
+각 룩은 **전후좌우 4장**: `front` · `left` · `right` · `back`.
+
+### 1. Drop 4 angles
+
+원본 4장을 넣는다. 방 배경이 있어도 된다 — 다음 단계에서 자른다.
 
 ```
 raw/looks/<id>/front.jpg
-raw/looks/<id>/left.jpg
-raw/looks/<id>/right.jpg
+raw/looks/<id>/left.jpg      # or side-left.jpg
+raw/looks/<id>/right.jpg     # or side-right.jpg
 raw/looks/<id>/back.jpg
 ```
 
-2. 배경을 지운다 (흰 그리드용 컷아웃).
+### 2. Background remove
+
+흰 그리드용 컷아웃. 배경을 지우고 순백 캔버스에 올린다.
 
 ```bash
-python3 -m pip install rembg
-./scripts/process-look.sh <id>
+python3 -m pip install "rembg[cpu]" pillow
+npm run process-look -- look-01
+# 또는 ./scripts/process-look.sh look-01
 ```
 
-결과는 `public/looks/<id>/{front,left,right,back}.png`.
+결과는 `public/looks/<id>/{front,left,right,back}.png` — **투명 컷아웃을 흰 캔버스에 합성한 PNG**. 그리드에는 이 컷아웃만 쓴다 (원본 룸 배경 금지).
 
-3. `src/data/looks.ts`에 룩과 상품을 적는다. `tiles`로 전신/디테일 크롭(줌, object-position)을 나눈다.
+### 3. Data entry
+
+`src/data/looks.ts`에 룩과 상품을 적는다.
+
+- `tiles` — 전신 + 디테일 크롭 (머리/두건, 베스트, 신발, 등 로고). `zoom` + `object-position`.
+- `products` — hover/tap 로드아웃. SKU가 오면 `sku` + `href` + 선택 `thumb`을 채운다.
 
 ```ts
 {
@@ -74,7 +86,19 @@ python3 -m pip install rembg
 }
 ```
 
-파이프라인: **4장 드롭 → 배경 제거 → 데이터 입력**.
+파일이 있는 룩만 홈 그리드에 나온다. Look #01 (`올 컨디션`)은 위 4장이 `raw/looks/look-01/`에 들어오면 컷아웃 후 오프닝이 된다.
+
+## Look #01 로드아웃
+
+정면 hover/tap = 인벤토리형 LOADOUT (흰 그리드, 네온 없음).
+
+| 아이템 | SKU | 링크 |
+| --- | --- | --- |
+| Nike ACG GOAT Pack Vest 5L | IQ7354-039 | Nike |
+| Nike ACG Solar Chase Dri-FIT ADV | IO9678-097 | Nike |
+| Nike ACG Zegama Trail | HV8113-103 | Nike |
+| Oakley Highland Grey Ink / Prizm Peach | 95220362 | [Kasina](https://www.kasina.co.kr/product-detail/132882506) |
+| 페이즐리 스컬캡 / Nike 숏 / ACG 삭스 / 워치 | — | 추후 SKU |
 
 ## 배포 / Vercel
 
@@ -82,6 +106,8 @@ python3 -m pip install rembg
 2. Framework: Next.js
 3. (선택) `NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app`
 4. Deploy 후 Instagram 바이오에 URL
+
+이 브랜치에는 Vercel preview가 아직 연결되어 있지 않다.
 
 ## 스택
 
