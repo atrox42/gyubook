@@ -94,11 +94,13 @@ npm run process-look -- look-01
 
 | 아이템 | SKU | 링크 |
 | --- | --- | --- |
-| Nike ACG GOAT Pack Vest 5L | IQ7354-039 | Nike |
-| Nike ACG Solar Chase Dri-FIT ADV | IO9678-097 | Nike |
-| Nike ACG Zegama Trail | HV8113-103 | Nike |
+| Nike ACG 고트 팩 베스트 5L | IQ7354-039 | [Nike KR](https://www.nike.com/kr/t/%EB%82%98%EC%9D%B4%ED%82%A4-acg-%EA%B3%A0%ED%8A%B8-%ED%8C%A9-%EB%B2%A0%EC%8A%A4%ED%8A%B85l-spA7pnEA/IQ7354-039) |
+| Nike ACG 솔라 체이스 드라이 핏 ADV | IO9678-097 | [Nike KR](https://www.nike.com/kr/t/acg-%EC%86%94%EB%9D%BC-%EC%B2%B4%EC%9D%B4%EC%8A%A4-%EB%82%A8%EC%84%B1-%EB%93%9C%EB%9D%BC%EC%9D%B4-%ED%95%8F-adv-%ED%8A%B8%EB%A0%88%EC%9D%BC-%EB%9F%AC%EB%8B%9D-%ED%83%91-cIc1bxsR/IO9678-097) |
+| Nike ACG 제가마 트레일 | HV8113-103 | [Nike KR](https://www.nike.com/kr/t/acg-%EC%A0%9C%EA%B0%80%EB%A7%88-%EB%82%A8%EC%84%B1-%ED%8A%B8%EB%A0%88%EC%9D%BC-%EB%9F%AC%EB%8B%9D%ED%99%94-tD6siwGz/HV8113-103) |
 | Oakley Highland Grey Ink / Prizm Peach | 95220362 | [Kasina](https://www.kasina.co.kr/product-detail/132882506) |
 | 페이즐리 스컬캡 / Nike 숏 / ACG 삭스 / 워치 | — | 추후 SKU |
+
+공식 썸네일: `public/products/look-01/{vest,tee,shoe,shades}.png` — `products[].thumb`에 연결.
 
 ## 배포 / Vercel
 
