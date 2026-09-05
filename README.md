@@ -90,7 +90,7 @@ npm run process-look -- look-01
 
 ## Look #01 로드아웃
 
-정면 hover/tap = 인벤토리형 LOADOUT (흰 그리드, 네온 없음).
+정면 전신 타일 (`span: "hero"`) hover/tap = 인벤토리형 LOADOUT — 슬롯이 팬아웃되고 핫스팟 번호가 붙는다. 흰 그리드, 네온 없음. 상세 크롭은 얇은 필만.
 
 | 아이템 | SKU | 링크 |
 | --- | --- | --- |

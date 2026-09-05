@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { Look, LookTile as LookTileType } from "@/types/look";
+import { isPrimaryShot, type Look, type LookTile as LookTileType } from "@/types/look";
 import { LoadoutHud } from "./LoadoutHud";
 
 type LookTileProps = {
@@ -21,13 +21,13 @@ const aspectClass = {
 };
 
 export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
-  const isHero = tile.span === "hero" || /full|front/.test(tile.id);
+  const isHero = isPrimaryShot(tile);
 
   return (
     <article
       className={`look-brick group relative cursor-pointer bg-paper ${
         open ? "is-open" : ""
-      }`}
+      } ${isHero ? "is-hero" : ""}`}
       onClick={(event) => {
         if ((event.target as HTMLElement).closest("a")) return;
         onToggle(tile.id);

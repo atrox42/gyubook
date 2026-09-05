@@ -161,7 +161,7 @@ export const looks: Look[] = [
         alt: "능선 전신",
         aspect: "hero",
         position: "center 42%",
-        span: "normal",
+        span: "hero",
       },
       {
         id: "rd-ridge",
@@ -225,7 +225,7 @@ export const looks: Look[] = [
         alt: "트레일 러닝 컷",
         aspect: "portrait",
         position: "70% 40%",
-        span: "normal",
+        span: "hero",
       },
       {
         id: "fs-shoe",
@@ -267,7 +267,7 @@ export const looks: Look[] = [
         alt: "솔숲 하이킹",
         aspect: "portrait",
         position: "center 38%",
-        span: "normal",
+        span: "hero",
       },
       {
         id: "pc-pack",

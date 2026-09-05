@@ -126,6 +126,39 @@ a {
 
 .inventory {
   position: absolute;
+  inset: 0;
+}
+
+.hot-dot {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #111111;
+  background: #ffffff;
+  font-size: 8px;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: #111111;
+  transform: translate(-50%, -50%) scale(0.72);
+  opacity: 0;
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease;
+  transition-delay: calc(var(--i, 0) * 28ms);
+}
+
+.group:hover .hot-dot,
+.group.is-open .hot-dot {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.inv-panel {
+  position: absolute;
   left: 8px;
   right: 8px;
   bottom: 28px;
@@ -151,35 +184,50 @@ a {
 }
 
 .inv-row {
-  display: grid;
-  grid-template-columns: 1.4rem minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 0.45rem;
-  min-width: min(100%, 15.5rem);
-  padding: 0.28rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: min(100%, 16.5rem);
+  padding: 0.32rem 0.5rem;
   background: rgba(255, 255, 255, 0.94);
   color: #111;
   font-size: 10px;
   font-weight: 300;
-  line-height: 1.35;
-  transform: translateY(8px);
+  line-height: 1.3;
+  transform: translate3d(-6px, calc((var(--n, 1) - var(--i, 0) - 1) * -10px), 0);
   opacity: 0;
   transition:
-    transform 220ms ease,
-    opacity 220ms ease;
-  transition-delay: calc(var(--i, 0) * 32ms);
+    transform 240ms ease,
+    opacity 240ms ease;
+  transition-delay: calc(var(--i, 0) * 36ms);
 }
 
 .group:hover .inv-row,
 .group.is-open .inv-row {
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
   opacity: 1;
 }
 
 .inv-slot {
+  flex: 0 0 1.35rem;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
   color: #9a9a9a;
+}
+
+.inv-thumb {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  object-fit: cover;
+  background: #fff;
+}
+
+.inv-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .inv-name {
@@ -191,4 +239,5 @@ a {
 .inv-meta {
   color: #9a9a9a;
   letter-spacing: 0.02em;
+  font-size: 9px;
 }

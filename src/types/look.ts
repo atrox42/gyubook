@@ -23,6 +23,11 @@ export type LookTile = {
   span: "hero" | "wide" | "normal";
 };
 
+/** Primary full-body shot — the hover/tap inventory lives here. */
+export function isPrimaryShot(tile: LookTile) {
+  return tile.span === "hero";
+}
+
 export type Look = {
   id: string;
   title: string;
