@@ -6,6 +6,8 @@ export type Product = {
   brand?: string;
   category: string;
   href?: string;
+  sku?: string;
+  thumb?: string;
   hotspot?: { x: number; y: number };
 };
 

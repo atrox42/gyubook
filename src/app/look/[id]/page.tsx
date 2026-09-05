@@ -27,12 +27,13 @@ export async function generateMetadata({
   const look = getLook(id);
   if (!look) return { title: "Not found" };
 
+  const description = `${look.title} — ${look.alt}`;
   return {
     title: look.title,
-    description: look.brief,
+    description,
     openGraph: {
       title: `${look.title} · ${site.name}`,
-      description: look.brief,
+      description,
     },
   };
 }

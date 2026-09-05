@@ -61,7 +61,15 @@ python3 -m pip install rembg
     { id: "02-head", src: "/looks/look-02/front.png", alt: "얼굴/모자", aspect: "square", position: "center 8%", zoom: 2.1, span: "normal" },
   ],
   products: [
-    { id: "hat", name: "Beanie", brand: "CAYL", category: "모자", hotspot: { x: 50, y: 10 } },
+    {
+      id: "hat",
+      name: "Beanie",
+      brand: "CAYL",
+      category: "모자",
+      sku: "optional-sku",
+      href: "https://cayl.co.kr",
+      hotspot: { x: 50, y: 10 },
+    },
   ],
 }
 ```
