@@ -18,10 +18,17 @@ export function EditorialGrid({ looks }: { looks: Look[] }) {
   }, [filter, looks]);
 
   return (
-    <div>
+    <div className="bg-paper">
       <SiteHeader filter={filter} onFilter={setFilter} />
       <main>
-        <div className="grid grid-cols-1 gap-[3px] bg-line sm:grid-cols-2 md:grid-cols-4">
+        <div className="look-wall">
+          <div className="look-brick">
+            <div className="aspect-void flex items-end px-5 pb-6">
+              <p className="text-[11px] font-light tracking-[0.22em] text-mute">
+                VOL. 01
+              </p>
+            </div>
+          </div>
           {tiles.map(({ look, tile }, index) => (
             <LookTile
               key={tile.id}
@@ -29,7 +36,9 @@ export function EditorialGrid({ looks }: { looks: Look[] }) {
               tile={tile}
               index={index}
               open={openId === tile.id}
-              onToggle={(id) => setOpenId((current) => (current === id ? null : id))}
+              onToggle={(id) =>
+                setOpenId((current) => (current === id ? null : id))
+              }
             />
           ))}
         </div>

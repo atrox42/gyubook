@@ -11,13 +11,12 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ filter = "all", onFilter }: SiteHeaderProps) {
   return (
-    <header className="sticky top-0 z-30 border-b border-line/80 bg-paper/90 backdrop-blur-md">
+    <header className="sticky top-0 z-30 bg-paper">
       <div className="flex items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
-        <Link href="/" className="min-w-0">
-          <p className="text-[15px] font-medium tracking-[0.22em]">{site.name}</p>
-          <p className="text-[10px] tracking-[0.16em] text-mute">{site.nameKo}</p>
+        <Link href="/" className="text-[15px] font-normal tracking-[0.28em]">
+          {site.name}
         </Link>
-        <nav className="flex flex-wrap justify-end gap-x-3 gap-y-1 text-[11px] tracking-[0.08em] text-mute sm:gap-x-5 sm:text-[12px]">
+        <nav className="flex flex-wrap justify-end gap-x-4 gap-y-1 text-[11px] font-light tracking-[0.08em] text-mute sm:gap-x-6">
           {ACTIVITY_FILTERS.map((item) => {
             const active = filter === item.id;
             return (
@@ -26,7 +25,7 @@ export function SiteHeader({ filter = "all", onFilter }: SiteHeaderProps) {
                 type="button"
                 onClick={() => onFilter?.(item.id)}
                 className={`cursor-pointer transition-colors ${
-                  active ? "text-ink underline underline-offset-4" : "hover:text-ink"
+                  active ? "text-ink" : "hover:text-ink"
                 }`}
                 aria-pressed={active}
               >

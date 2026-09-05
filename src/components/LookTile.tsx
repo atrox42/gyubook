@@ -20,19 +20,12 @@ const aspectClass = {
   detail: "aspect-detail",
 };
 
-const spanClass = {
-  hero: "span-hero",
-  wide: "span-wide",
-  normal: "",
-};
-
 export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
-  const number = String(index + 1).padStart(2, "0");
-  const isHero = tile.span === "hero";
+  const isHero = tile.span === "hero" || /full|front/.test(tile.id);
 
   return (
     <article
-      className={`group relative cursor-pointer bg-paper ${spanClass[tile.span]} ${
+      className={`look-brick group relative cursor-pointer bg-paper ${
         open ? "is-open" : ""
       }`}
       onClick={(event) => {
@@ -40,37 +33,27 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
         onToggle(tile.id);
       }}
     >
-      <div
-        className={`relative overflow-hidden bg-[#eeebe4] ${aspectClass[tile.aspect]}`}
-      >
+      <div className={`relative overflow-hidden bg-paper ${aspectClass[tile.aspect]}`}>
         <Image
           src={tile.src}
           alt={tile.alt}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 50vw"
+          sizes="(max-width: 900px) 50vw, 25vw"
           className="pointer-events-none tile-media"
           style={{
             objectPosition: tile.position,
             transform: tile.zoom ? `scale(${tile.zoom})` : undefined,
           }}
         />
-        <span className="tile-index pointer-events-none absolute top-2 left-2 z-20">
-          {number}
-        </span>
-        <div className="loadout-layer pointer-events-none absolute inset-0 z-20">
-          <LoadoutHud
-            products={look.products}
-            visible
-            variant={isHero ? "hero" : "quiet"}
-          />
+        <span className="tile-index pointer-events-none">{index + 1}</span>
+        <div className="loadout-layer absolute inset-0 z-20">
+          <LoadoutHud products={look.products} variant={isHero ? "hero" : "quiet"} />
         </div>
         <Link
           href={`/look/${look.id}`}
-          className={`file-link absolute z-30 text-[11px] tracking-[0.1em] ${
-            isHero ? "top-2 right-2" : "right-2 bottom-2"
-          }`}
+          className="file-link absolute top-2 right-2 z-30 text-[10px] font-light tracking-[0.12em]"
         >
-          {isHero ? "FILE" : look.title}
+          {look.title}
         </Link>
       </div>
     </article>

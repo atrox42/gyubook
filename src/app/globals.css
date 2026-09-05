@@ -1,41 +1,58 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-paper: #f6f5f1;
-  --color-ink: #161616;
-  --color-mute: #8a8680;
-  --color-line: #e4e1d8;
+  --color-paper: #ffffff;
+  --color-ink: #111111;
+  --color-mute: #9a9a9a;
+  --color-line: #f0f0f0;
   --color-chip: #ffffff;
 
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
-  background: #f6f5f1;
-  color: #161616;
+  background: #ffffff;
+  color: #111111;
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100dvh;
-  background: #f6f5f1;
-  color: #161616;
+  background: #ffffff;
+  color: #111111;
   font-family: var(--font-sans);
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {
-  background: #161616;
-  color: #f6f5f1;
+  background: #111111;
+  color: #ffffff;
 }
 
 a {
   color: inherit;
 }
 
+.look-wall {
+  column-count: 2;
+  column-gap: 0;
+}
+
+@media (min-width: 900px) {
+  .look-wall {
+    column-count: 4;
+  }
+}
+
+.look-brick {
+  break-inside: avoid;
+  width: 100%;
+}
+
 .aspect-hero {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 4.2;
 }
 
 .aspect-portrait {
@@ -47,18 +64,11 @@ a {
 }
 
 .aspect-detail {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
 }
 
-@media (min-width: 768px) {
-  .span-hero {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-
-  .span-wide {
-    grid-column: span 2;
-  }
+.aspect-void {
+  aspect-ratio: 3 / 4;
 }
 
 .tile-media {
@@ -68,29 +78,48 @@ a {
 }
 
 .tile-index {
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: #161616;
-  mix-blend-mode: difference;
-  opacity: 0.55;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  z-index: 20;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: #111;
+  opacity: 0.45;
 }
 
 .loadout-layer {
   opacity: 0;
-  transition: opacity 220ms ease;
+  pointer-events: none;
+  transition: opacity 200ms ease;
 }
 
 .group:hover .loadout-layer,
 .group.is-open .loadout-layer {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .file-link {
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 200ms ease;
 }
 
 .group:hover .file-link,
 .group.is-open .file-link {
   opacity: 1;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.2rem 0.45rem;
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  color: #111;
 }
