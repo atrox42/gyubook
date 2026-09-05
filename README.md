@@ -87,7 +87,7 @@ Look #01 (`올 컨디션`)은 `raw/looks/look-01/`에 4장이 들어오면 `look
 | Oakley Highland Grey Ink / Prizm Peach | 95220362 | [Kasina](https://www.kasina.co.kr/product-detail/132882506) |
 | 페이즐리 스컬캡 / Nike 숏 / ACG 삭스 / 워치 | — | 추후 SKU |
 
-공식 썸네일: `public/products/look-01/{vest,tee,shoe,shades}.png` — `products[].thumb`에 연결.
+호버 로드아웃: 전신 정면은 고정 핫스팟 템플릿 (`src/lib/hotspots.ts`). SKU가 있으면 KREAM 메인컷 → rembg 카드 (`scripts/fetch-kream-cutout.py`). SKU 없으면 텍스트만.
 
 ## 배포 / Vercel
 

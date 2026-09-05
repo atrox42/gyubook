@@ -1,3 +1,5 @@
+import type { HotspotSlot } from "@/lib/hotspots";
+
 export type Activity = "hiking" | "trekking" | "trail-running" | "other";
 
 export type Product = {
@@ -8,6 +10,7 @@ export type Product = {
   href?: string;
   sku?: string;
   thumb?: string;
+  slot?: HotspotSlot;
   hotspot?: { x: number; y: number };
 };
 

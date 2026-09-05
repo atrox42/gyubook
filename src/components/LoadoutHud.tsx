@@ -1,101 +1,111 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import { slotPoint } from "@/lib/hotspots";
 import type { Product } from "@/types/look";
 
 type LoadoutHudProps = {
   products: Product[];
   variant: "hero" | "quiet";
+  layout?: "figure" | "quad";
 };
 
 function productTitle(product: Product) {
   return `${product.brand ? `${product.brand} ` : ""}${product.name}`;
 }
 
-function QuietPills({ products }: { products: Product[] }) {
-  return (
-    <ul className="absolute inset-x-2 bottom-7 flex flex-col items-start gap-1">
-      {products.slice(0, 3).map((product) => {
-        const body = (
-          <>
-            <span>{productTitle(product)}</span>
-            <span className="text-mute">{product.category}</span>
-          </>
-        );
-        return (
-          <li key={product.id}>
-            {product.href ? (
-              <a href={product.href} target="_blank" rel="noreferrer" className="pill">
-                {body}
-              </a>
-            ) : (
-              <span className="pill">{body}</span>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
+function markerPoint(product: Product, layout: "figure" | "quad") {
+  if (product.slot) return slotPoint(product.slot, layout);
+  return product.hotspot;
 }
 
-export function LoadoutHud({ products, variant }: LoadoutHudProps) {
+export function LoadoutHud({
+  products,
+  variant,
+  layout = "figure",
+}: LoadoutHudProps) {
+  const numbered = products.filter((product) => markerPoint(product, layout));
+  const cards = products.filter((product) => product.sku && product.thumb);
+  const textOnly = products.filter((product) => !product.sku || !product.thumb);
+
   if (variant === "quiet") {
-    return <QuietPills products={products} />;
+    return (
+      <ul className="absolute inset-x-2 bottom-7 flex flex-col items-start gap-1">
+        {products.slice(0, 3).map((product) => (
+          <li key={product.id}>
+            <span className="pill">
+              <span>{productTitle(product)}</span>
+              <span className="text-mute">{product.category}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    );
   }
 
   return (
-    <div className="inventory" style={{ "--n": products.length } as CSSProperties}>
-      {products.map((product, index) =>
-        product.hotspot ? (
+    <div className="inventory" style={{ "--n": cards.length || textOnly.length } as CSSProperties}>
+      {numbered.map((product, index) => {
+        const point = markerPoint(product, layout);
+        if (!point) return null;
+        return (
           <span
             key={`${product.id}-dot`}
             className="hot-dot"
             style={
               {
-                left: `${product.hotspot.x}%`,
-                top: `${product.hotspot.y}%`,
+                left: `${point.x}%`,
+                top: `${point.y}%`,
                 "--i": index,
               } as CSSProperties
             }
           >
             {String(index + 1).padStart(2, "0")}
           </span>
-        ) : null,
-      )}
+        );
+      })}
 
       <div className="inv-panel">
         <p className="inv-head">LOADOUT</p>
-        <ul className="inv-list">
-          {products.map((product, index) => {
-            const slot = String(index + 1).padStart(2, "0");
-            const row = (
-              <>
-                <span className="inv-slot">{slot}</span>
-                {product.thumb ? (
-                  <img src={product.thumb} alt="" className="inv-thumb" />
-                ) : null}
-                <span className="inv-copy">
-                  <span className="inv-name">{productTitle(product)}</span>
-                  <span className="inv-meta">
-                    {product.sku ? `${product.sku} · ${product.category}` : product.category}
-                  </span>
-                </span>
-              </>
-            );
-
-            return (
+        {cards.length > 0 ? (
+          <ul className="inv-cards">
+            {cards.map((product, index) => {
+              const slot = String(
+                numbered.findIndex((item) => item.id === product.id) + 1,
+              ).padStart(2, "0");
+              const body = (
+                <>
+                  <span className="inv-card-slot">{slot}</span>
+                  <img src={product.thumb} alt="" className="inv-cut" />
+                  <span className="inv-card-name">{productTitle(product)}</span>
+                </>
+              );
+              return (
+                <li key={product.id} style={{ "--i": index } as CSSProperties}>
+                  {product.href ? (
+                    <a href={product.href} target="_blank" rel="noreferrer" className="inv-card">
+                      {body}
+                    </a>
+                  ) : (
+                    <div className="inv-card">{body}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+        {textOnly.length > 0 ? (
+          <ul className="inv-list">
+            {textOnly.map((product, index) => (
               <li key={product.id} style={{ "--i": index } as CSSProperties}>
-                {product.href ? (
-                  <a href={product.href} target="_blank" rel="noreferrer" className="inv-row">
-                    {row}
-                  </a>
-                ) : (
-                  <div className="inv-row">{row}</div>
-                )}
+                <div className="inv-row">
+                  <span className="inv-name">{productTitle(product)}</span>
+                  <span className="inv-meta">{product.category}</span>
+                </div>
               </li>
-            );
-          })}
-        </ul>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </div>
   );

@@ -48,7 +48,11 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
         />
         <span className="tile-index pointer-events-none">{index + 1}</span>
         <div className="loadout-layer absolute inset-0 z-20">
-          <LoadoutHud products={look.products} variant={isHero ? "hero" : "quiet"} />
+          <LoadoutHud
+            products={look.products}
+            variant={isHero ? "hero" : "quiet"}
+            layout={tile.aspect === "quad" ? "quad" : "figure"}
+          />
         </div>
         <Link
           href={`/look/${look.id}`}
