@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import type { Look, LookTile as LookTileType } from "@/types/look";
 import { LoadoutHud } from "./LoadoutHud";
 
@@ -28,16 +27,14 @@ const spanClass = {
 };
 
 export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
-  const [hovered, setHovered] = useState(false);
   const number = String(index + 1).padStart(2, "0");
   const isHero = tile.span === "hero";
-  const revealed = open || hovered;
 
   return (
     <article
-      className={`group relative cursor-pointer bg-paper ${spanClass[tile.span]}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className={`group relative cursor-pointer bg-paper ${spanClass[tile.span]} ${
+        open ? "is-open" : ""
+      }`}
       onClick={(event) => {
         if ((event.target as HTMLElement).closest("a")) return;
         onToggle(tile.id);
@@ -60,30 +57,21 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
         <span className="tile-index pointer-events-none absolute top-2 left-2 z-20">
           {number}
         </span>
-        <LoadoutHud
-          products={look.products}
-          visible={revealed}
-          variant={isHero ? "hero" : "quiet"}
-        />
-        {isHero ? (
-          <Link
-            href={`/look/${look.id}`}
-            className={`absolute top-2 right-2 z-30 text-[11px] tracking-[0.1em] transition-opacity ${
-              revealed ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            FILE
-          </Link>
-        ) : (
-          <Link
-            href={`/look/${look.id}`}
-            className={`absolute right-2 bottom-2 z-30 text-[11px] tracking-[0.08em] transition-opacity ${
-              revealed ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            {look.title}
-          </Link>
-        )}
+        <div className="loadout-layer pointer-events-none absolute inset-0 z-20">
+          <LoadoutHud
+            products={look.products}
+            visible
+            variant={isHero ? "hero" : "quiet"}
+          />
+        </div>
+        <Link
+          href={`/look/${look.id}`}
+          className={`file-link absolute z-30 text-[11px] tracking-[0.1em] ${
+            isHero ? "top-2 right-2" : "right-2 bottom-2"
+          }`}
+        >
+          {isHero ? "FILE" : look.title}
+        </Link>
       </div>
     </article>
   );

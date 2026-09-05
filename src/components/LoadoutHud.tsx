@@ -1,49 +1,30 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import type { Product } from "@/types/look";
 
 type LoadoutHudProps = {
   products: Product[];
-  visible: boolean;
+  visible?: boolean;
   variant: "hero" | "quiet";
 };
 
-export function LoadoutHud({ products, visible, variant }: LoadoutHudProps) {
+export function LoadoutHud({ products, variant }: LoadoutHudProps) {
   if (variant === "quiet") {
     return (
-      <AnimatePresence>
-        {visible ? (
-          <motion.ul
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.28 }}
-            className="absolute inset-x-2 bottom-8 space-y-0.5 bg-paper/90 p-2 ring-1 ring-ink/8"
-          >
-            {products.slice(0, 4).map((product) => (
-              <li key={product.id} className="text-[12px] leading-snug">
-                {product.brand ? `${product.brand} ` : ""}
-                {product.name}
-                <span className="ml-1.5 text-[10px] text-mute">{product.category}</span>
-              </li>
-            ))}
-          </motion.ul>
-        ) : null}
-      </AnimatePresence>
+      <ul className="absolute inset-x-2 bottom-8 space-y-0.5 bg-paper/90 p-2 ring-1 ring-ink/10">
+        {products.slice(0, 4).map((product) => (
+          <li key={product.id} className="text-[12px] leading-snug">
+            {product.brand ? `${product.brand} ` : ""}
+            {product.name}
+            <span className="ml-1.5 text-[10px] text-mute">{product.category}</span>
+          </li>
+        ))}
+      </ul>
     );
   }
 
   return (
-    <AnimatePresence>
-      {visible ? (
-        <motion.div
-          key="hero-hud"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="pointer-events-none absolute inset-0 z-20"
-        >
+    <div className="pointer-events-none absolute inset-0">
           {products
             .filter((product) => product.hotspot)
             .map((product, index) => {
@@ -113,8 +94,6 @@ export function LoadoutHud({ products, visible, variant }: LoadoutHudProps) {
               })}
             </ul>
           </div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+    </div>
   );
 }
