@@ -25,8 +25,8 @@ export function SiteHeader({ filter = "all", onFilter }: SiteHeaderProps) {
                 key={item.id}
                 type="button"
                 onClick={() => onFilter?.(item.id)}
-                className={`transition-colors ${
-                  active ? "text-ink" : "hover:text-ink"
+                className={`cursor-pointer transition-colors ${
+                  active ? "text-ink underline underline-offset-4" : "hover:text-ink"
                 }`}
                 aria-pressed={active}
               >

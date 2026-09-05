@@ -37,7 +37,13 @@ export function LoadoutHud({ products, visible, variant }: LoadoutHudProps) {
   return (
     <AnimatePresence>
       {visible ? (
-        <>
+        <motion.div
+          key="hero-hud"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="pointer-events-none absolute inset-0 z-20"
+        >
           {products
             .filter((product) => product.hotspot)
             .map((product, index) => {
@@ -45,14 +51,10 @@ export function LoadoutHud({ products, visible, variant }: LoadoutHudProps) {
               const y = product.hotspot!.y;
               const flip = x > 58;
               return (
-                <motion.div
+                <div
                   key={`tag-${product.id}`}
-                  className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2"
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
                   style={{ left: `${x}%`, top: `${y}%` }}
-                  initial={{ opacity: 0, scale: 0.7 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.7 }}
-                  transition={{ delay: index * 0.045, duration: 0.28 }}
                 >
                   <span className="block h-1.5 w-1.5 rounded-full bg-ink" />
                   <span
@@ -65,17 +67,11 @@ export function LoadoutHud({ products, visible, variant }: LoadoutHudProps) {
                       {product.brand ?? product.name}
                     </span>
                   </span>
-                </motion.div>
+                </div>
               );
             })}
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 12 }}
-            transition={{ duration: 0.32, delay: 0.08 }}
-            className="pointer-events-auto absolute inset-x-2 bottom-2 z-20 max-h-[46%] overflow-auto bg-paper/92 p-2.5 ring-1 ring-ink/10 backdrop-blur-sm"
-          >
+          <div className="pointer-events-auto absolute inset-x-2 bottom-2 max-h-[46%] overflow-auto bg-paper/92 p-2.5 ring-1 ring-ink/10 backdrop-blur-sm">
             <p className="mb-2 text-[10px] tracking-[0.2em] text-mute">LOADOUT</p>
             <ul>
               {products.map((product, index) => {
@@ -94,11 +90,8 @@ export function LoadoutHud({ products, visible, variant }: LoadoutHudProps) {
                   </>
                 );
                 return (
-                  <motion.li
+                  <li
                     key={product.id}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + index * 0.04 }}
                     className="border-t border-line/80 first:border-t-0"
                   >
                     {product.href ? (
@@ -115,12 +108,12 @@ export function LoadoutHud({ products, visible, variant }: LoadoutHudProps) {
                         {Row}
                       </div>
                     )}
-                  </motion.li>
+                  </li>
                 );
               })}
             </ul>
-          </motion.div>
-        </>
+          </div>
+        </motion.div>
       ) : null}
     </AnimatePresence>
   );

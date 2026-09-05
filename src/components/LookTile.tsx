@@ -35,9 +35,13 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
 
   return (
     <article
-      className={`group relative bg-paper ${spanClass[tile.span]}`}
+      className={`group relative cursor-pointer bg-paper ${spanClass[tile.span]}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={(event) => {
+        if ((event.target as HTMLElement).closest("a")) return;
+        onToggle(tile.id);
+      }}
     >
       <div
         className={`relative overflow-hidden bg-[#eeebe4] ${aspectClass[tile.aspect]}`}
@@ -47,31 +51,20 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
           alt={tile.alt}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 50vw"
-          className="tile-media"
+          className="pointer-events-none tile-media"
           style={{
             objectPosition: tile.position,
             transform: tile.zoom ? `scale(${tile.zoom})` : undefined,
           }}
         />
-        <button
-          type="button"
-          className="absolute inset-0 z-10"
-          onClick={() => onToggle(tile.id)}
-          aria-expanded={revealed}
-          aria-label={`${look.title} 로드아웃 ${revealed ? "닫기" : "열기"}`}
-        />
         <span className="tile-index pointer-events-none absolute top-2 left-2 z-20">
           {number}
         </span>
-        <div className="absolute inset-0 z-20 pointer-events-none">
-          <div className={revealed ? "pointer-events-auto h-full" : "h-full"}>
-            <LoadoutHud
-              products={look.products}
-              visible={revealed}
-              variant={isHero ? "hero" : "quiet"}
-            />
-          </div>
-        </div>
+        <LoadoutHud
+          products={look.products}
+          visible={revealed}
+          variant={isHero ? "hero" : "quiet"}
+        />
         {isHero ? (
           <Link
             href={`/look/${look.id}`}
@@ -82,18 +75,14 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
             FILE
           </Link>
         ) : (
-          <div
-            className={`pointer-events-none absolute inset-x-0 bottom-0 z-30 p-3 transition-opacity ${
+          <Link
+            href={`/look/${look.id}`}
+            className={`absolute right-2 bottom-2 z-30 text-[11px] tracking-[0.08em] transition-opacity ${
               revealed ? "opacity-100" : "opacity-0"
             }`}
           >
-            <Link
-              href={`/look/${look.id}`}
-              className="pointer-events-auto text-[11px] tracking-[0.08em] underline-offset-2 hover:underline"
-            >
-              {look.title}
-            </Link>
-          </div>
+            {look.title}
+          </Link>
         )}
       </div>
     </article>
