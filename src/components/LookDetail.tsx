@@ -88,7 +88,7 @@ export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
           <p className="text-[10px] font-light tracking-[0.32em] text-mute">
             LOADOUT
           </p>
-          <h1 className="font-serif mt-3 text-5xl leading-none tracking-tight">
+          <h1 className="mt-3 text-5xl font-light leading-none tracking-tight">
             {look.title}
           </h1>
           <ul className="mt-12 space-y-5">

@@ -8,8 +8,8 @@
   --color-chip: #ffffff;
 
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-display: var(--font-syne), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), var(--font-sans), ui-serif, Georgia, serif;
 }
 
 html {
@@ -120,7 +120,7 @@ a {
 
 .file-link {
   opacity: 0;
-  font-family: var(--font-syne), ui-sans-serif, sans-serif;
+  font-family: var(--font-syne), var(--font-sans), ui-sans-serif, sans-serif;
   transition: opacity 220ms ease;
 }
 
