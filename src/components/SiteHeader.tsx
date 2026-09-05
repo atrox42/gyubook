@@ -12,11 +12,14 @@ type SiteHeaderProps = {
 export function SiteHeader({ filter = "all", onFilter }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-30 bg-paper">
-      <div className="flex items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
-        <Link href="/" className="text-[15px] font-normal tracking-[0.28em]">
+      <div className="flex items-end justify-between gap-6 px-4 py-5 sm:px-6">
+        <Link
+          href="/"
+          className="font-display text-[17px] font-medium tracking-[0.22em]"
+        >
           {site.name}
         </Link>
-        <nav className="flex flex-wrap justify-end gap-x-4 gap-y-1 text-[11px] font-light tracking-[0.08em] text-mute sm:gap-x-6">
+        <nav className="flex flex-wrap justify-end gap-x-5 gap-y-1 text-[10px] font-light tracking-[0.22em] text-mute sm:gap-x-7">
           {ACTIVITY_FILTERS.map((item) => {
             const active = filter === item.id;
             return (

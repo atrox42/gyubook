@@ -20,19 +20,19 @@ export default function OpenGraphImage() {
           padding: "56px 64px",
         }}
       >
-        <div style={{ fontSize: 18, letterSpacing: "0.28em", color: "#8a8680" }}>
-          FIELD ARCHIVE
+        <div style={{ fontSize: 16, letterSpacing: "0.42em", color: "#9a9a9a" }}>
+          VOL. 01
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 88, letterSpacing: "0.18em", fontWeight: 500 }}>
+          <div style={{ fontSize: 88, letterSpacing: "0.2em", fontWeight: 500 }}>
             GYUBOOK
           </div>
-          <div style={{ marginTop: 16, fontSize: 24, color: "#8a8680" }}>
-            hiking · trekking · trail running
+          <div style={{ marginTop: 18, fontSize: 22, letterSpacing: "0.16em", color: "#9a9a9a" }}>
+            LOOKBOOK · WHITE · OUTFIT ONLY
           </div>
         </div>
-        <div style={{ fontSize: 18, letterSpacing: "0.2em", color: "#8a8680" }}>
-          LOOKBOOK
+        <div style={{ fontSize: 16, letterSpacing: "0.28em", color: "#9a9a9a" }}>
+          규북
         </div>
       </div>
     ),

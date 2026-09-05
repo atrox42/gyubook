@@ -30,18 +30,21 @@ export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
 
   return (
     <div className="min-h-[100dvh] bg-paper">
-      <header className="flex items-center justify-between px-5 py-3.5">
-        <Link href="/" className="text-[13px] font-normal tracking-[0.22em]">
+      <header className="flex items-end justify-between px-5 py-5">
+        <Link
+          href="/"
+          className="font-display text-[15px] font-medium tracking-[0.22em]"
+        >
           GYUBOOK
         </Link>
-        <p className="text-[11px] font-light tracking-[0.1em] text-mute">
-          {activity.ko}
+        <p className="text-[10px] font-light tracking-[0.22em] text-mute">
+          {activity.en}
         </p>
       </header>
 
       <div className="grid lg:grid-cols-2">
         <section className="bg-paper">
-          <div className="relative aspect-3/4 bg-paper">
+          <div className="relative aspect-square bg-paper lg:aspect-3/4">
             <Image
               src={active}
               alt={look.alt}
@@ -62,8 +65,8 @@ export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
                     key={angle}
                     type="button"
                     onClick={() => setActive(src)}
-                    className={`relative aspect-3/4 bg-paper ${
-                      selected ? "opacity-100" : "opacity-50"
+                    className={`relative aspect-square bg-paper ${
+                      selected ? "opacity-100" : "opacity-40"
                     }`}
                     aria-label={ANGLE_LABEL[angle]}
                   >
@@ -81,27 +84,42 @@ export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
           ) : null}
         </section>
 
-        <aside className="flex flex-col justify-end px-6 py-12 lg:min-h-[100dvh] lg:px-16">
-          <p className="text-[11px] font-light tracking-[0.18em] text-mute">
-            {activity.en}
+        <aside className="flex flex-col justify-end px-6 py-14 lg:min-h-[100dvh] lg:px-16">
+          <p className="text-[10px] font-light tracking-[0.32em] text-mute">
+            LOADOUT
           </p>
-          <h1 className="mt-3 text-3xl font-normal tracking-tight">{look.title}</h1>
-          <ul className="mt-10 space-y-3">
+          <h1 className="font-serif mt-3 text-5xl leading-none tracking-tight">
+            {look.title}
+          </h1>
+          <ul className="mt-12 space-y-5">
             {look.products.map((product) => {
               const row = (
                 <>
-                  <span className="min-w-0">
-                    <span className="block text-[14px] font-light">
-                      {product.brand ? `${product.brand} ` : ""}
+                  {product.thumb ? (
+                    <img
+                      src={product.thumb}
+                      alt=""
+                      className="h-12 w-12 shrink-0 object-contain"
+                    />
+                  ) : (
+                    <span className="block h-12 w-12 shrink-0" />
+                  )}
+                  <span className="min-w-0 flex-1">
+                    {product.brand ? (
+                      <span className="block text-[9px] tracking-[0.14em] text-mute uppercase">
+                        {product.brand}
+                      </span>
+                    ) : null}
+                    <span className="mt-0.5 block text-[15px] font-light">
                       {product.name}
                     </span>
                     {product.sku ? (
-                      <span className="mt-0.5 block text-[10px] font-light tracking-[0.06em] text-mute">
+                      <span className="mt-1 block text-[10px] font-light tracking-[0.08em] text-mute">
                         {product.sku}
                       </span>
                     ) : null}
                   </span>
-                  <span className="shrink-0 text-[11px] font-light text-mute">
+                  <span className="shrink-0 text-[10px] font-light tracking-[0.12em] text-mute uppercase">
                     {product.category}
                   </span>
                 </>
@@ -113,12 +131,12 @@ export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
                       href={product.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-baseline justify-between gap-4 hover:opacity-50"
+                      className="flex items-center justify-between gap-4 hover:opacity-45"
                     >
                       {row}
                     </a>
                   ) : (
-                    <div className="flex items-baseline justify-between gap-4">
+                    <div className="flex items-center justify-between gap-4 opacity-70">
                       {row}
                     </div>
                   )}
@@ -126,9 +144,9 @@ export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
               );
             })}
           </ul>
-          <nav className="mt-16 flex justify-between text-[11px] font-light tracking-[0.12em] text-mute">
-            <Link href={`/look/${prevId}`}>Prev</Link>
-            <Link href={`/look/${nextId}`}>Next</Link>
+          <nav className="mt-20 flex justify-between text-[10px] font-light tracking-[0.22em] text-mute">
+            <Link href={`/look/${prevId}`}>PREV</Link>
+            <Link href={`/look/${nextId}`}>NEXT</Link>
           </nav>
         </aside>
       </div>

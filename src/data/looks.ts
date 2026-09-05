@@ -47,7 +47,7 @@ export const looks: Look[] = [
         brand: "Nike ACG",
         category: "반팔",
         sku: "IO9678-097",
-        href: "https://www.nike.com/kr/t/acg-%EC%86%94%EB%9D%BC-%EC%B2%B4%EC%9D%B4%EC%8A%A4-%EB%82%A8%EC%84%B1-%EB%93%9C%EB%9D%BC%EC%9D%B4-%ED%95%8F-adv-%ED%8A%B8%EB%A0%88%EC%9D%BC-%EB%9F%AC%EB%8B%9D-%ED%83%91-cIc1bxsR/IO9678-097",
+        href: "https://kream.co.kr/products/787409",
         thumb: "/products/look-01/IO9678-097.png",
         slot: "torso",
       },

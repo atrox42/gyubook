@@ -23,9 +23,12 @@ export function EditorialGrid({ looks }: { looks: Look[] }) {
       <main>
         <div className="look-wall">
           <div className="look-brick">
-            <div className="aspect-void flex items-end px-5 pb-6">
-              <p className="text-[11px] font-light tracking-[0.22em] text-mute">
-                VOL. 01
+            <div className="aspect-void flex flex-col justify-end px-5 pb-8">
+              <p className="font-serif text-[64px] leading-none tracking-tight">
+                01
+              </p>
+              <p className="mt-3 text-[10px] font-light tracking-[0.42em] text-mute">
+                VOL.
               </p>
             </div>
           </div>

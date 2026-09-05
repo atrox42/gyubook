@@ -1,10 +1,10 @@
 # GYUBOOK / 규북
 
-하이킹 · 트레킹 · 트레일러닝 **필드 룩북**. 흰 그리드, 룩당 4각 화이트 쿼드 한 장.
+**룩북. 화이트. 아웃핏만.** CAYL-white editorial. 룩당 4각 화이트 쿼드 한 장.
 
 Instagram 바이오용 v1. 백엔드 없음.
 
-A quiet editorial lookbook — CAYL-style white grid, shoppable loadouts on hover/tap.
+A fashion-forward white lookbook — one packed 4-angle composite per look, shoppable loadout on hover/tap.
 
 ## 로컬 / Run
 
@@ -82,7 +82,7 @@ Look #01 (`올 컨디션`)은 `raw/looks/look-01/`에 4장이 들어오면 `look
 | 아이템 | SKU | 링크 |
 | --- | --- | --- |
 | Nike ACG 고트 팩 베스트 5L | IQ7354-039 | [Nike KR](https://www.nike.com/kr/t/%EB%82%98%EC%9D%B4%ED%82%A4-acg-%EA%B3%A0%ED%8A%B8-%ED%8C%A9-%EB%B2%A0%EC%8A%A4%ED%8A%B85l-spA7pnEA/IQ7354-039) |
-| Nike ACG 솔라 체이스 드라이 핏 ADV | IO9678-097 | [Nike KR](https://www.nike.com/kr/t/acg-%EC%86%94%EB%9D%BC-%EC%B2%B4%EC%9D%B4%EC%8A%A4-%EB%82%A8%EC%84%B1-%EB%93%9C%EB%9D%BC%EC%9D%B4-%ED%95%8F-adv-%ED%8A%B8%EB%A0%88%EC%9D%BC-%EB%9F%AC%EB%8B%9D-%ED%83%91-cIc1bxsR/IO9678-097) |
+| Nike ACG 솔라 체이스 드라이 핏 ADV | IO9678-097 | [KREAM 787409](https://kream.co.kr/products/787409) |
 | Nike ACG 제가마 트레일 | HV8113-103 | [Nike KR](https://www.nike.com/kr/t/acg-%EC%A0%9C%EA%B0%80%EB%A7%88-%EB%82%A8%EC%84%B1-%ED%8A%B8%EB%A0%88%EC%9D%BC-%EB%9F%AC%EB%8B%9D%ED%99%94-tD6siwGz/HV8113-103) |
 | Oakley Highland Grey Ink / Prizm Peach | 95220362 | [Kasina](https://www.kasina.co.kr/product-detail/132882506) |
 | 페이즐리 스컬캡 / Nike 숏 / ACG 삭스 / 워치 | — | 추후 SKU |

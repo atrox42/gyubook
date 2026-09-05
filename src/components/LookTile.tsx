@@ -39,14 +39,16 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
           src={tile.src}
           alt={tile.alt}
           fill
-          sizes="(max-width: 900px) 50vw, 25vw"
+          sizes="(max-width: 1100px) 50vw, 33vw"
           className="pointer-events-none tile-media"
           style={{
             objectPosition: tile.position,
             transform: tile.zoom ? `scale(${tile.zoom})` : undefined,
           }}
         />
-        <span className="tile-index pointer-events-none">{index + 1}</span>
+        <span className="tile-index pointer-events-none">
+          {String(index + 1).padStart(2, "0")}
+        </span>
         <div className="loadout-layer absolute inset-0 z-20">
           <LoadoutHud
             products={look.products}
@@ -56,7 +58,7 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
         </div>
         <Link
           href={`/look/${look.id}`}
-          className="file-link absolute top-2 right-2 z-30 text-[10px] font-light tracking-[0.12em]"
+          className="file-link absolute top-3 right-3 z-30 text-[11px] font-medium tracking-[0.14em]"
         >
           {look.title}
         </Link>

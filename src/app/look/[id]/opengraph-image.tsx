@@ -31,17 +31,17 @@ export default async function LookOpenGraphImage({
           padding: "56px 64px",
         }}
       >
-        <div style={{ fontSize: 18, letterSpacing: "0.28em", color: "#8a8680" }}>
+        <div style={{ fontSize: 16, letterSpacing: "0.28em", color: "#9a9a9a" }}>
           GYUBOOK
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 20, letterSpacing: "0.2em", color: "#8a8680" }}>
+          <div style={{ fontSize: 14, letterSpacing: "0.28em", color: "#9a9a9a" }}>
             {activity}
           </div>
-          <div style={{ marginTop: 14, fontSize: 72, fontWeight: 500 }}>{title}</div>
+          <div style={{ marginTop: 14, fontSize: 76, fontWeight: 400 }}>{title}</div>
         </div>
-        <div style={{ fontSize: 18, letterSpacing: "0.16em", color: "#8a8680" }}>
-          LOOKBOOK
+        <div style={{ fontSize: 14, letterSpacing: "0.28em", color: "#9a9a9a" }}>
+          LOADOUT
         </div>
       </div>
     ),

@@ -11,7 +11,7 @@ type LoadoutHudProps = {
 };
 
 function productTitle(product: Product) {
-  return `${product.brand ? `${product.brand} ` : ""}${product.name}`;
+  return product.name;
 }
 
 function markerPoint(product: Product, layout: "figure" | "quad") {
@@ -34,7 +34,7 @@ export function LoadoutHud({
         {products.slice(0, 3).map((product) => (
           <li key={product.id}>
             <span className="pill">
-              <span>{productTitle(product)}</span>
+              <span>{product.brand ? `${product.brand} ` : ""}{productTitle(product)}</span>
               <span className="text-mute">{product.category}</span>
             </span>
           </li>
@@ -44,7 +44,10 @@ export function LoadoutHud({
   }
 
   return (
-    <div className="inventory" style={{ "--n": cards.length || textOnly.length } as CSSProperties}>
+    <div
+      className={`inventory ${layout === "quad" ? "is-quad" : ""}`}
+      style={{ "--n": cards.length || textOnly.length } as CSSProperties}
+    >
       {numbered.map((product, index) => {
         const point = markerPoint(product, layout);
         if (!point) return null;
@@ -77,6 +80,9 @@ export function LoadoutHud({
                 <>
                   <span className="inv-card-slot">{slot}</span>
                   <img src={product.thumb} alt="" className="inv-cut" />
+                  {product.brand ? (
+                    <span className="inv-card-brand">{product.brand}</span>
+                  ) : null}
                   <span className="inv-card-name">{productTitle(product)}</span>
                 </>
               );
@@ -99,7 +105,10 @@ export function LoadoutHud({
             {textOnly.map((product, index) => (
               <li key={product.id} style={{ "--i": index } as CSSProperties}>
                 <div className="inv-row">
-                  <span className="inv-name">{productTitle(product)}</span>
+                  <span className="inv-name">
+                    {product.brand ? `${product.brand} ` : ""}
+                    {productTitle(product)}
+                  </span>
                   <span className="inv-meta">{product.category}</span>
                 </div>
               </li>

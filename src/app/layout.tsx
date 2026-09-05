@@ -1,17 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Noto_Sans_KR } from "next/font/google";
+import { Instrument_Serif, Noto_Sans_KR, Syne } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const geist = Geist({
+const display = Syne({
   subsets: ["latin"],
-  variable: "--font-geist",
+  variable: "--font-syne",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  weight: "400",
   display: "swap",
 });
 
 const sansKr = Noto_Sans_KR({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -28,11 +36,11 @@ export const metadata: Metadata = {
     "GYUBOOK",
     "규북",
     "lookbook",
-    "hiking",
-    "trekking",
-    "trail running",
-    "아웃도어",
     "룩북",
+    "outfit",
+    "CAYL",
+    "hiking",
+    "trail running",
   ],
   authors: [{ name: "규석" }],
   openGraph: {
@@ -64,7 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ko"
-      className={`${geist.variable} ${sansKr.variable} h-full antialiased`}
+      className={`${display.variable} ${serif.variable} ${sansKr.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-paper text-ink">{children}</body>
     </html>
