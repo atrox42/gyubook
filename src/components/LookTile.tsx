@@ -18,6 +18,7 @@ const aspectClass = {
   portrait: "aspect-portrait",
   square: "aspect-square",
   detail: "aspect-detail",
+  quad: "aspect-quad",
 };
 
 export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {

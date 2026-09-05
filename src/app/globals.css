@@ -67,6 +67,14 @@ a {
   aspect-ratio: 4 / 5;
 }
 
+.aspect-quad {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-quad .tile-media {
+  object-fit: contain;
+}
+
 .aspect-void {
   aspect-ratio: 3 / 4;
 }

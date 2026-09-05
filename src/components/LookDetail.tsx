@@ -23,7 +23,9 @@ export function LookDetail({ look, prevId, nextId }: LookDetailProps) {
   const angles = (["front", "left", "right", "back"] as const).filter(
     (angle) => look.angles?.[angle],
   );
-  const [active, setActive] = useState<string>(look.angles?.front ?? look.image);
+  const [active, setActive] = useState<string>(
+    look.quad ?? look.angles?.front ?? look.image,
+  );
   const activity = ACTIVITY_META[look.activity];
 
   return (

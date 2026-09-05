@@ -17,7 +17,7 @@ export type LookTile = {
   id: string;
   src: string;
   alt: string;
-  aspect: "hero" | "portrait" | "square" | "detail";
+  aspect: "hero" | "portrait" | "square" | "detail" | "quad";
   position: string;
   zoom?: number;
   span: "hero" | "wide" | "normal";
@@ -36,5 +36,6 @@ export type Look = {
   alt: string;
   products: Product[];
   angles?: Partial<Record<LookAngle, string>>;
+  quad?: string;
   tiles: LookTile[];
 };

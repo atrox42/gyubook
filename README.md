@@ -1,6 +1,6 @@
 # GYUBOOK / 규북
 
-하이킹 · 트레킹 · 트레일러닝 **필드 룩북**. 흰 그리드, 전신 + 디테일 크롭.
+하이킹 · 트레킹 · 트레일러닝 **필드 룩북**. 흰 그리드, 룩당 4각 화이트 쿼드 한 장.
 
 Instagram 바이오용 v1. 백엔드 없음.
 
@@ -46,51 +46,38 @@ npm run process-look -- look-01
 # 또는 ./scripts/process-look.sh look-01
 ```
 
-결과는 `public/looks/<id>/{front,left,right,back}.png` — **투명 컷아웃을 흰 캔버스에 합성한 PNG**. 그리드에는 이 컷아웃만 쓴다 (원본 룸 배경 금지).
+결과는:
+
+- `public/looks/<id>/{front,left,right,back}.png` — 부드러운 rembg (u2netp, 매팅 없음)
+- `public/looks/<id>/<id>-quad-white.png` — **메인 타일**. 흰 배경에 전후좌우를 거의 틈 없이 2×2로 붙인 한 장.
+
+그리드에는 쿼드 한 장만 쓴다. 호버/탭 = LOADOUT. 원본 룸 배경 금지. Outdoor Color 탭 없음.
 
 ### 3. Data entry
 
-`src/data/looks.ts`에 룩과 상품을 적는다.
-
-- `tiles` — 전신 + 디테일 크롭 (머리/두건, 베스트, 신발, 등 로고). `zoom` + `object-position`.
-- `products` — hover/tap 로드아웃. SKU가 오면 `sku` + `href` + 선택 `thumb`을 채운다.
+`src/data/looks.ts`에 룩과 상품을 적는다. 타일은 쿼드 하나.
 
 ```ts
 {
   id: "look-02",
   title: "다음 능선",
   activity: "hiking",
-  image: "/looks/look-02/front.png",
-  alt: "정면 전신",
-  angles: {
-    front: "/looks/look-02/front.png",
-    left: "/looks/look-02/left.png",
-    right: "/looks/look-02/right.png",
-    back: "/looks/look-02/back.png",
-  },
+  image: "/looks/look-02/look-02-quad-white.png",
+  quad: "/looks/look-02/look-02-quad-white.png",
   tiles: [
-    { id: "02-front", src: "/looks/look-02/front.png", alt: "정면", aspect: "hero", position: "center 20%", span: "hero" },
-    { id: "02-head", src: "/looks/look-02/front.png", alt: "얼굴/모자", aspect: "square", position: "center 8%", zoom: 2.1, span: "normal" },
+    { id: "02-quad", src: "/looks/look-02/look-02-quad-white.png", alt: "4각 쿼드", aspect: "quad", position: "center center", span: "hero" },
   ],
   products: [
-    {
-      id: "hat",
-      name: "Beanie",
-      brand: "CAYL",
-      category: "모자",
-      sku: "optional-sku",
-      href: "https://cayl.co.kr",
-      hotspot: { x: 50, y: 10 },
-    },
+    { id: "hat", name: "Beanie", brand: "CAYL", category: "모자", sku: "optional-sku", href: "https://cayl.co.kr" },
   ],
 }
 ```
 
-파일이 있는 룩만 홈 그리드에 나온다. Look #01 (`올 컨디션`)은 위 4장이 `raw/looks/look-01/`에 들어오면 컷아웃 후 오프닝이 된다.
+Look #01 (`올 컨디션`)은 `raw/looks/look-01/`에 4장이 들어오면 `look-01-quad-white.png`가 오프닝 히어로가 된다.
 
 ## Look #01 로드아웃
 
-정면 전신 타일 (`span: "hero"`) hover/tap = 인벤토리형 LOADOUT — 슬롯이 팬아웃되고 핫스팟 번호가 붙는다. 흰 그리드, 네온 없음. 상세 크롭은 얇은 필만.
+`look-01-quad-white` hover/tap = 인벤토리형 LOADOUT. 흰 그리드, 네온 없음.
 
 | 아이템 | SKU | 링크 |
 | --- | --- | --- |

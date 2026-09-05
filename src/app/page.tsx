@@ -10,10 +10,14 @@ function publicExists(src: string) {
 
 function availableLooks(): Look[] {
   return looks
-    .map((look) => ({
-      ...look,
-      tiles: look.tiles.filter((tile) => publicExists(tile.src)),
-    }))
+    .map((look) => {
+      const hero = look.quad ?? look.image;
+      return {
+        ...look,
+        image: hero,
+        tiles: look.tiles.filter((tile) => publicExists(tile.src)),
+      };
+    })
     .filter((look) => look.tiles.length > 0 && publicExists(look.image));
 }
 
