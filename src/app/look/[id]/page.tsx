@@ -2,8 +2,9 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LookDetail } from "@/components/LookDetail";
-import { getAdjacentLooks, getLook, looks } from "@/data/looks";
+import { CategoryCatalog } from "@/components/CategoryCatalog";
+import { catalogItems } from "@/lib/catalog";
+import { getLook, looks } from "@/data/looks";
 import { site } from "@/lib/site";
 
 function publicExists(src: string) {
@@ -27,13 +28,12 @@ export async function generateMetadata({
   const look = getLook(id);
   if (!look) return { title: "Not found" };
 
-  const description = `${look.title} — ${look.alt}`;
   return {
     title: look.title,
-    description,
+    description: `${look.title} — ${look.alt}`,
     openGraph: {
       title: `${look.title} · ${site.name}`,
-      description,
+      description: `${look.title} — ${look.alt}`,
     },
   };
 }
@@ -47,13 +47,5 @@ export default async function LookPage({
   const look = getLook(id);
   if (!look) notFound();
 
-  const { prev, next } = getAdjacentLooks(look.id);
-
-  return (
-    <LookDetail
-      look={look}
-      prevId={prev?.id ?? look.id}
-      nextId={next?.id ?? look.id}
-    />
-  );
+  return <CategoryCatalog items={catalogItems().filter((item) => item.lookId === look.id)} />;
 }

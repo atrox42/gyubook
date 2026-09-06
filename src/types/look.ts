@@ -9,7 +9,12 @@ export type Product = {
   category: string;
   href?: string;
   sku?: string;
+  color?: string;
   thumb?: string;
+  wear?: string;
+  price?: string;
+  /** Coupang Partners / Naver Brand Connect. Empty = 링크 준비중 */
+  affiliateUrl?: string;
   slot?: HotspotSlot;
   hotspot?: { x: number; y: number };
 };

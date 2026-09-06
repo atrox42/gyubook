@@ -339,3 +339,83 @@ a {
   font-size: 8px;
   text-transform: uppercase;
 }
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 36px;
+}
+
+@media (min-width: 960px) {
+  .catalog-grid {
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 18px;
+    row-gap: 48px;
+  }
+}
+
+.catalog-card {
+  min-width: 0;
+}
+
+.catalog-nukki {
+  position: relative;
+  aspect-ratio: 1;
+  background: #ffffff;
+}
+
+.catalog-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 2px 0;
+}
+
+.catalog-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: #111;
+}
+
+.catalog-price {
+  flex: none;
+  font-size: 11px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: #111;
+}
+
+.catalog-wear-label {
+  margin-top: 14px;
+  padding: 0 2px;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: #9a9a9a;
+}
+
+.catalog-wear {
+  position: relative;
+  aspect-ratio: 3 / 4.4;
+  margin-top: 6px;
+  background: #ffffff;
+}
+
+.catalog-buy {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 0 2px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.catalog-buy.is-wait {
+  color: #9a9a9a;
+  cursor: default;
+}
