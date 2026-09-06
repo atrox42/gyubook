@@ -69,8 +69,18 @@ a {
   aspect-ratio: 4 / 5;
 }
 
+.look-opener {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 12px 64px;
+}
+
+.look-opener .look-brick {
+  width: 100%;
+}
+
 .aspect-quad {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1548 / 1600;
 }
 
 .aspect-quad .tile-media {

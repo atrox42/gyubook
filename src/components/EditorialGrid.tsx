@@ -17,21 +17,17 @@ export function EditorialGrid({ looks }: { looks: Look[] }) {
       .flatMap((look) => look.tiles.map((tile) => ({ look, tile })));
   }, [filter, looks]);
 
+  const opener = looks.length === 1;
+
   return (
     <div className="bg-paper">
       <SiteHeader filter={filter} onFilter={setFilter} />
       <main>
-        <div className="look-wall">
-          <div className="look-brick">
-            <div className="aspect-void flex flex-col justify-end px-5 pb-8">
-              <p className="font-serif text-[64px] leading-none tracking-tight">
-                01
-              </p>
-              <p className="mt-3 text-[10px] font-light tracking-[0.42em] text-mute">
-                VOL.
-              </p>
-            </div>
-          </div>
+        <div className="flex items-baseline justify-between px-5 pb-3 pt-1 sm:px-6">
+          <p className="font-serif text-[28px] leading-none tracking-tight">01</p>
+          <p className="text-[10px] font-light tracking-[0.42em] text-mute">VOL.</p>
+        </div>
+        <div className={opener ? "look-opener" : "look-wall"}>
           {tiles.map(({ look, tile }, index) => (
             <LookTile
               key={tile.id}

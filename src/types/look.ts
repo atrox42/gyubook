@@ -41,4 +41,6 @@ export type Look = {
   angles?: Partial<Record<LookAngle, string>>;
   quad?: string;
   tiles: LookTile[];
+  /** Hidden from the homepage grid (stock placeholders). */
+  listed?: boolean;
 };

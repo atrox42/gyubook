@@ -39,7 +39,7 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
           src={tile.src}
           alt={tile.alt}
           fill
-          sizes="(max-width: 1100px) 50vw, 33vw"
+          sizes="(max-width: 1100px) 100vw, 1120px"
           className="pointer-events-none tile-media"
           style={{
             objectPosition: tile.position,

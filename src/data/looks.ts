@@ -5,19 +5,17 @@ export const looks: Look[] = [
     id: "look-01",
     title: "올 컨디션",
     activity: "trail-running",
-    image: "/looks/look-01/look-01-quad-white.png",
+    image: "/looks/look-01/look-01-quad-white.jpg",
     alt: "올 컨디션 — 전후좌우 4각 화이트 쿼드",
-    quad: "/looks/look-01/look-01-quad-white.png",
+    quad: "/looks/look-01/look-01-quad-white.jpg",
+    listed: true,
     angles: {
-      front: "/looks/look-01/front.png",
-      right: "/looks/look-01/right.png",
-      back: "/looks/look-01/back.png",
-      left: "/looks/look-01/left.png",
+      front: "/looks/look-01/front.jpg",
     },
     tiles: [
       {
         id: "01-quad",
-        src: "/looks/look-01/look-01-quad-white.png",
+        src: "/looks/look-01/look-01-quad-white.jpg",
         alt: "전후좌우 4각 화이트 쿼드",
         aspect: "quad",
         position: "center center",
@@ -38,7 +36,7 @@ export const looks: Look[] = [
         category: "선글라스",
         sku: "95220362",
         href: "https://www.kasina.co.kr/product-detail/132882506",
-        thumb: "/products/look-01/95220362.png",
+        thumb: "/products/look-01/shades.jpg",
         slot: "outer",
       },
       {
@@ -48,7 +46,7 @@ export const looks: Look[] = [
         category: "반팔",
         sku: "IO9678-097",
         href: "https://kream.co.kr/products/787409",
-        thumb: "/products/look-01/IO9678-097.png",
+        thumb: "/products/look-01/tee.jpg",
         slot: "torso",
       },
       {
@@ -58,7 +56,7 @@ export const looks: Look[] = [
         category: "조끼",
         sku: "IQ7354-039",
         href: "https://www.nike.com/kr/t/%EB%82%98%EC%9D%B4%ED%82%A4-acg-%EA%B3%A0%ED%8A%B8-%ED%8C%A9-%EB%B2%A0%EC%8A%A4%ED%8A%B85l-spA7pnEA/IQ7354-039",
-        thumb: "/products/look-01/IQ7354-039.png",
+        thumb: "/products/look-01/vest.jpg",
         slot: "vest",
       },
       {
@@ -88,7 +86,7 @@ export const looks: Look[] = [
         category: "신발",
         sku: "HV8113-103",
         href: "https://www.nike.com/kr/t/acg-%EC%A0%9C%EA%B0%80%EB%A7%88-%EB%82%A8%EC%84%B1-%ED%8A%B8%EB%A0%88%EC%9D%BC-%EB%9F%AC%EB%8B%9D%ED%99%94-tD6siwGz/HV8113-103",
-        thumb: "/products/look-01/HV8113-103.png",
+        thumb: "/products/look-01/shoe.jpg",
         slot: "shoes",
       },
     ],
@@ -97,6 +95,7 @@ export const looks: Look[] = [
     id: "ridge-dawn",
     title: "능선 새벽",
     activity: "hiking",
+    listed: false,
     image: "/looks/ridge-dawn.jpg",
     alt: "좁은 능선 위를 걷는 하이커",
     tiles: [
@@ -143,6 +142,7 @@ export const looks: Look[] = [
     id: "first-strike",
     title: "첫 발",
     activity: "trail-running",
+    listed: false,
     image: "/looks/first-strike.jpg",
     alt: "솔숲 트레일을 달리는 러너",
     tiles: [
@@ -178,6 +178,7 @@ export const looks: Look[] = [
     id: "pine-corridor",
     title: "소나무 회랑",
     activity: "hiking",
+    listed: false,
     image: "/looks/pine-corridor.jpg",
     alt: "햇살 드는 솔숲 오솔길",
     tiles: [
@@ -216,10 +217,11 @@ export function getLook(id: string) {
 }
 
 export function getAdjacentLooks(id: string) {
-  const index = looks.findIndex((look) => look.id === id);
+  const listed = looks.filter((look) => look.listed !== false);
+  const index = listed.findIndex((look) => look.id === id);
   if (index < 0) return { prev: undefined, next: undefined };
   return {
-    prev: looks[(index - 1 + looks.length) % looks.length],
-    next: looks[(index + 1) % looks.length],
+    prev: listed[(index - 1 + listed.length) % listed.length],
+    next: listed[(index + 1) % listed.length],
   };
 }

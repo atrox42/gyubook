@@ -25,14 +25,17 @@ export const FIGURE_HOTSPOTS: Record<HotspotSlot, { x: number; y: number }> = {
   shoes: { x: 50, y: 92 },
 };
 
-/** Front cell of the 2×2 white quad (top-left). */
+/**
+ * Front figure of the packed 4-angle hero.
+ * Look #01 quad is four standing poses in a row — markers stay on the leftmost body.
+ */
 export function slotPoint(
   slot: HotspotSlot,
   layout: "figure" | "quad" = "figure",
 ) {
   const point = FIGURE_HOTSPOTS[slot];
   if (layout === "quad") {
-    return { x: point.x * 0.5, y: point.y * 0.5 };
+    return { x: 3 + point.x * 0.22, y: point.y };
   }
   return point;
 }

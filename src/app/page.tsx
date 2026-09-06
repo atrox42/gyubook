@@ -10,6 +10,7 @@ function publicExists(src: string) {
 
 function availableLooks(): Look[] {
   return looks
+    .filter((look) => look.listed !== false)
     .map((look) => {
       const hero = look.quad ?? look.image;
       return {
