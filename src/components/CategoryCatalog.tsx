@@ -71,8 +71,8 @@ export function CategoryCatalog({ items }: { items: CatalogItem[] }) {
           </p>
         ) : (
           <div className="catalog-grid">
-            {visible.map((item) => (
-              <CatalogCard key={item.id} item={item} />
+            {visible.map((item, index) => (
+              <CatalogCard key={item.id} item={item} priority={index < 2} />
             ))}
           </div>
         )}
