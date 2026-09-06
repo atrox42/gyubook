@@ -39,6 +39,7 @@ export function LookTile({ look, tile, index, open, onToggle }: LookTileProps) {
           src={tile.src}
           alt={tile.alt}
           fill
+          priority={index === 0}
           sizes="(max-width: 1100px) 100vw, 1120px"
           className="pointer-events-none tile-media"
           style={{
