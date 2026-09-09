@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta name="color-scheme" content="light only"/>
+<meta name="theme-color" content="#ffffff"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>gyurita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#111;--mute:#8a8a8a;--line:#eee;--bg:#ffffff;--pad:20px;--card:#ffffff;--accent:#4F453F;color-scheme:only light}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-gutter:stable both-edges}
+html,body{background:#ffffff !important;overflow-y:scroll;color:var(--ink);font-family:Pretendard,system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;color-scheme:only light;overflow-anchor:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
+
+header{
+  min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;padding:22px var(--pad) 14px;position:sticky;top:0;background:var(--bg);z-index:40;border-bottom:1px solid transparent;
+  position:sticky
+}
+.header-row{width:100%;max-width:1440px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center}
+.logo{
+  letter-spacing:-0.12em;
+  font-size:22px;font-weight:600;text-align:center;text-transform:lowercase;
+  display:inline-block; width:100%;
+  animation: logoTrack 1.8s ease-in-out infinite;
+  will-change: letter-spacing;
+  cursor:pointer
+}
+@keyframes logoTrack{
+  0%,100%{ letter-spacing:-0.12em }
+  50%{ letter-spacing:0.28em }
+}
+@media (prefers-reduced-motion: reduce){
+  .logo{ animation:none; letter-spacing:-0.12em }
+}
+.menu-btn{
+  width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;
+  border-radius:8px
+}
+.menu-btn span{display:block;width:18px;height:1.5px;background:var(--ink);position:relative}
+.menu-btn span::before,.menu-btn span::after{
+  content:"";position:absolute;left:0;width:18px;height:1.5px;background:var(--ink)
+}
+.menu-btn span::before{top:-6px}
+.menu-btn span::after{top:6px}
+.menu-btn.active span,
+.menu-btn.active span::before,
+.menu-btn.active span::after{background:var(--accent)}
+.logo .logo-accent{color:var(--accent)}
+.header-spacer{width:44px;height:44px}
+.lookbook-nav{
+  display:flex;flex-wrap:nowrap;gap:10px 14px;justify-content:center;align-items:center;
+  width:100%;max-width:1440px;padding:0 44px 4px;box-sizing:border-box
+}
+.lookbook-nav button{
+  font-size:11px;letter-spacing:.04em;color:var(--mute);
+  padding:4px 10px;border:1px solid transparent;border-radius:999px;background:transparent;
+  min-width:7.5em;text-align:center;flex:0 0 auto;box-sizing:border-box
+}
+.lookbook-nav button.on{
+  color:#fff;background:var(--accent);border-color:var(--accent)
+}
+.lookbook-nav button:hover{color:var(--accent)}
+.lookbook-nav button.on:hover{color:#fff}
+
+.page{max-width:1440px;margin:0 auto;padding:8px var(--pad) 96px;width:100%;box-sizing:border-box;overflow-x:hidden}
+.top{
+  display:flex;justify-content:center;align-items:center;gap:18px;
+  margin:32px 0 22px;position:relative;padding-top:8px;width:100%;box-sizing:border-box
+}
+.top h1{display:none !important}
+.crumb{
+  margin:0;font-size:12px;color:var(--ink);letter-spacing:.14em;
+  font-weight:500;text-transform:uppercase
+}
+.sort{font-size:11px;letter-spacing:.08em;margin:0;position:absolute;right:0;top:50%;transform:translateY(-50%)}
+
+.chips{
+  display:flex;flex-wrap:wrap;gap:4px;justify-content:center;
+  margin:0 0 6px;max-width:min(92vw,720px);margin-left:auto;margin-right:auto
+}
+.chips.use-chips{margin-bottom:5px}
+.chips.cat-chips{margin-bottom:14px}
+.chips button{
+  font-size:11px;letter-spacing:.04em;color:var(--mute);
+  padding:3px 6px;border:1px solid var(--line);border-radius:999px;background:#fff
+}
+.chips button.on{
+  color:#fff;background:var(--accent);border-color:var(--accent)
+}
+.chips button .chip-ico{
+  width:12px;height:12px;display:inline-block;vertical-align:-2px;margin-right:3px
+}
+.chips button .chip-ico svg{width:12px;height:12px;display:block}
+
+/* Shared product grid — activity lookbook, ACG List, My List, 조합 */
+.grid,
+#starterGrid,
+#memberGrid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:56px 52px
+}
+@media(min-width:900px){
+  .grid,
+  #starterGrid,
+  #memberGrid{grid-template-columns:repeat(5,minmax(0,1fr));gap:60px 52px}
+}
+
+.card{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.imgwrap{width:100%;
+  background:#ffffff;aspect-ratio:1/1.15;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  position:relative
+}
+.imgwrap.wear{
+  background:#fff;padding:0;position:relative;overflow:hidden;
+  border-radius:2px;
+}
+.imgwrap img,
+.imgwrap .ph{width:100%;height:100%;object-fit:contain;display:block;transform:scale(1.03);transform-origin:center}
+.imgwrap.wear img,.wear-quad-full{width:100%;height:100%;object-fit:contain;display:block;transform:none}
+
+.wear-stage{
+  position:absolute;inset:0;overflow:hidden;background:#fff
+}
+.wear-quad-full{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;object-position:center;display:block;
+  background:#fff
+}
+.wear-card{outline:none;cursor:default}
+
+.row{
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  gap:2px;text-align:center;width:100%
+}
+.name{font-size:11px;line-height:1.4;letter-spacing:.01em;text-align:center;width:100%;min-height:2.8em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.model{font-size:10px;line-height:1.25;letter-spacing:.02em;color:var(--mute);text-align:center;width:100%;margin:0}
+.price{font-size:11px;white-space:nowrap;color:var(--mute);text-align:center;width:100%;min-height:1.2em}
+.use-labels{
+  display:flex;flex-wrap:wrap;gap:4px 8px;justify-content:center;align-items:center;
+  margin-top:4px;font-size:9px;letter-spacing:.04em;color:var(--mute);line-height:1.3
+}
+.use-labels .ul{
+  display:inline-flex;align-items:center;gap:4px;color:var(--mute)
+}
+.use-labels .ul .ui{
+  width:11px;height:11px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto
+}
+.use-labels .ul .ui svg{width:11px;height:11px;display:block}
+.use-toggles{
+  display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin-top:4px;
+  width:100%
+}
+.use-toggles button{
+  font-size:9px;letter-spacing:.06em;padding:2px 5px;
+  border:1px solid var(--line);border-radius:999px;color:var(--mute);background:#fff;
+  display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;white-space:nowrap
+}
+.use-toggles button .ui{
+  width:11px;height:11px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto
+}
+.use-toggles button .ui svg{width:11px;height:11px;display:block}
+.use-toggles button.on{
+  color:#fff;background:var(--accent);border-color:var(--accent)
+}
+.own-btn,.pick-btn{
+  margin-top:0;font-size:10px;letter-spacing:.1em;padding:3px 10px;
+  border:1px solid var(--line);border-radius:999px;color:var(--mute);background:#fff
+}
+.own-btn.on,.pick-btn.on{
+  color:#fff;background:var(--accent);border-color:var(--accent)
+}
+
+.empty{grid-column:1/-1;padding:60px 0;text-align:center;color:var(--mute);font-size:12px;letter-spacing:.08em;line-height:1.7}
+footer{margin-top:56px;font-size:10px;color:var(--mute);letter-spacing:.06em;line-height:1.6}
+
+/* drawer */
+.scrim{
+  position:fixed;inset:0;background:rgba(0,0,0,.18);z-index:60;
+  opacity:0;pointer-events:none;transition:opacity .2s ease
+}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:0;height:100%;width:min(82vw,320px);
+  background:#fff;z-index:70;border-left:1px solid var(--line);
+  transform:translateX(104%);transition:transform .22s ease;
+  padding:28px 22px 40px;display:flex;flex-direction:column;gap:8px
+}
+.drawer.on{transform:translateX(0)}
+.drawer h2{font-size:11px;letter-spacing:.16em;color:var(--mute);font-weight:500;margin:0 0 18px;text-transform:uppercase}
+.drawer button.nav{
+  text-align:left;padding:14px 4px;font-size:15px;letter-spacing:.02em;
+  border-bottom:1px solid var(--line)
+}
+.drawer button.nav.on{font-weight:600;color:var(--accent)}
+.drawer-close{align-self:flex-end;font-size:11px;letter-spacing:.1em;color:var(--mute);margin-bottom:8px;padding:8px}
+
+/* 조합 */
+.panel{
+  border:1px solid var(--line);padding:18px 16px;margin:0 0 22px;background:#fff
+}
+.panel h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 14px;font-weight:500}
+.starter-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.starter-row button,.action-row button{
+  font-size:11px;letter-spacing:.04em;padding:8px 14px;
+  border:1px solid var(--line);border-radius:999px;color:var(--mute)
+}
+.starter-row button.on,.action-row button.primary{
+  color:#fff;background:var(--accent);border-color:var(--accent)
+}
+.action-row{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.note{
+  width:100%;min-height:72px;margin-top:12px;border:1px solid var(--line);
+  padding:10px 12px;font:inherit;resize:vertical;background:#fff
+}
+.saved-look{
+  border-top:1px solid var(--line);padding:12px 0 4px;margin-top:10px;
+  font-size:12px;line-height:1.5
+}
+.saved-look .meta{color:var(--mute);font-size:11px;margin-bottom:4px}
+.ph{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  color:var(--mute);font-size:11px;letter-spacing:.08em
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <div class="header-spacer" aria-hidden="true"></div>
+    <button type="button" class="logo" id="siteLogo" aria-label="My List">gyurita</button>
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span></button>
+  </div>
+  <nav class="lookbook-nav" id="lookbookNav" aria-label="Activities">
+    <button type="button" data-nav="trail">Trail Running</button>
+    <button type="button" data-nav="hike">Hiking</button>
+    <button type="button" data-nav="trek">Trekking</button>
+  </nav>
+</header>
+
+<main class="page">
+  <div class="top">
+    <div>
+      <h1 id="title">TRAIL RUNNING</h1>
+      <div class="crumb" id="crumb">Product List</div>
+    </div>
+    <button type="button" class="sort" id="sortBtn">SORT +</button>
+  </div>
+  <div class="chips use-chips" id="useChips" hidden></div>
+  <div class="chips cat-chips" id="chips" hidden></div>
+  <section class="grid" id="grid" aria-label="products"></section>
+  <div id="builder" hidden></div>
+  <footer data-build="v27">Affiliate links coming soon. · v27</footer>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="Menu" hidden>
+  <button type="button" class="drawer-close" id="drawerClose">CLOSE</button>
+  <h2>Menu</h2>
+  <button type="button" class="nav" data-nav="mylist">My List</button>
+  <button type="button" class="nav" data-nav="acg">ACG List</button>
+  <button type="button" class="nav" data-nav="trail">Trail Running</button>
+  <button type="button" class="nav" data-nav="hike">Hiking</button>
+  <button type="button" class="nav" data-nav="trek">Trekking</button>
+  <button type="button" class="nav" data-nav="coord">조합</button>
+</aside>
+
+<script>
+const NAV = [
+  { id:"mylist", label:"My List", title:"MY LIST", crumb:"Owned" },
+  { id:"acg", label:"ACG List", title:"ACG LIST", crumb:"Catalog" },
+  { id:"trail", label:"Trail Running", title:"TRAIL RUNNING", crumb:"Product List" },
+  { id:"hike", label:"Hiking", title:"HIKING", crumb:"Product List" },
+  { id:"trek", label:"Trekking", title:"TREKKING", crumb:"Product List" },
+  { id:"coord", label:"조합", title:"조합", crumb:"Outfit Builder" }
+];
+
+const USES = [
+  { id:"hiking", label:"Hiking" },
+  { id:"trekking", label:"Trekking" },
+  { id:"trail_running", label:"Trail Running" },
+  { id:"daily", label:"Daily" },
+  { id:"rainy", label:"Rainy Day" }
+];
+
+const USE_ICONS = {
+  hiking: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/><path d="M10.5 8.5 8 21"/><path d="M13.5 8.5 16 21"/><path d="M9 13h6"/><path d="m4 16 3.5-2.5L10.5 16"/><path d="M17.5 11 20 8l1.5 1"/></svg>`,
+  trekking: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 6-10 4 6 3-4 5 8"/><path d="M4 20h16"/></svg>`,
+  trail_running: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/><path d="M9 9.5 7 14l-3 1"/><path d="m11 10 1.5 3.5L16 15"/><path d="m10.5 13.5 1 7"/><path d="m13.2 13.8.8 3.7 3 2"/><path d="M3 19h4"/></svg>`,
+  daily: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>`,
+  rainy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 18v2M12 17v3M16 18v2"/><path d="M7 15a4 4 0 1 1 .7-7.94A5 5 0 0 1 17 10a3.5 3.5 0 0 1-.1 7H7Z"/></svg>`
+};
+
+const looks = {
+  "look-01": { label: "LOOK 01", quad: "looks/look-01/quad.jpg" }
+};
+
+const trailItems = [
+  { name:"Oakley Highland", color:"95220362", price:275000, nukki:"products/shades.png", lookId:"look-01", affiliateUrl:"" },
+  { name:"ACG Solar Chase", color:"IO9678-097", price:75000, nukki:"products/tee.png", lookId:"look-01", affiliateUrl:"" },
+  { name:"ACG GOAT Pack Vest 5L", color:"IQ7354-039", price:199000, nukki:"products/vest.png", lookId:"look-01", affiliateUrl:"" },
+  { name:"ACG Lava Loop", color:"IO9672-010 / Black", price:95000, nukki:"products/shorts.png", lookId:"look-01", affiliateUrl:"", kream:"https://kream.co.kr/products/750618" },
+  { name:"ACG Elevated Crew Socks", color:"IH8647-025", price:25000, nukki:"products/socks.png", lookId:"look-01", affiliateUrl:"", kream:"https://kream.co.kr/products/886985" },
+  { name:"ACG Zegama Trail", color:"HV8113-103", price:219000, nukki:"products/shoe.png", lookId:"look-01", affiliateUrl:"" }
+];
+
+const activityItems = { trail: trailItems, hike: [], trek: [] };
+
+const STARTERS = ["shoes","bag","outer"];
+let categoryOrder = ["shoes","outer","top","bottom","bag","accessory","other"];
+let categoryLabels = {shoes:"신발",outer:"아우터",top:"상의",bottom:"하의",bag:"가방",accessory:"패션잡화",other:"기타"};
+let acgList = [];
+let owned = new Set();
+let acgUses = {}; // { [id]: ['hiking','trekking','trail_running','daily','rainy'] }
+let savedLooks = [];
+let active = "trail";
+let acgFilter = "all";
+let useFilter = "all";
+let sortPrice = false;
+let startType = null;
+let starterId = null;
+let members = new Set();
+let note = "";
+
+const grid = document.getElementById("grid");
+const chips = document.getElementById("chips");
+const useChips = document.getElementById("useChips");
+const builder = document.getElementById("builder");
+const title = document.getElementById("title");
+const crumb = document.getElementById("crumb");
+const sortBtn = document.getElementById("sortBtn");
+const drawer = document.getElementById("drawer");
+const scrim = document.getElementById("scrim");
+const lookbookNav = document.getElementById("lookbookNav");
+
+function formatWon(n){
+  if(n == null || n === "") return "";
+  const num = Number(n);
+  if(!Number.isFinite(num)) return "";
+  return "₩" + num.toLocaleString("ko-KR");
+}
+
+function lookTotal(products){
+  return products.reduce((s,p) => s + (Number(p.price) || 0), 0);
+}
+
+function shortName(p){
+  let en = (p.name_en || "").trim();
+  en = en.replace(/^Nike\s+/i, "");
+  en = en.replace(/\)+$/g, "").trim();
+  en = en.replace(/\s*\([^)]*$/g, "").trim();
+  en = en.replace(/\s*-\s*Asia\s*$/i, "").trim();
+  if(!en){
+    const ko = p.name_ko || "";
+    const m = ko.match(/\(([^)]+)\)\s*$/);
+    en = (m ? m[1] : ko).replace(/^Nike\s+/i, "").trim();
+  }
+  return en || p.id;
+}
+
+function extractModel(p){
+  if(p.style_code) return String(p.style_code);
+  if(p.model) return String(p.model);
+  if(p.color && /[A-Za-z]/.test(String(p.color))) return String(p.color);
+  const src = [p.name_en, p.name_ko, p.name].filter(Boolean).join(" ");
+  const m = src.match(/\(([A-Z0-9][A-Z0-9./-]{3,})\)\s*$/i);
+  if(m) return m[1];
+  return "";
+}
+
+function loadOwned(){
+  try{
+    const raw = localStorage.getItem("acg-owned");
+    if(raw){
+      const arr = JSON.parse(raw);
+      if(Array.isArray(arr) && arr.length){ owned = new Set(arr.map(String)); return; }
+    }
+  }catch(e){}
+}
+
+function seedOwned(ids){
+  if(owned.size) return;
+  if(Array.isArray(ids) && ids.length){
+    owned = new Set(ids.map(String));
+    saveOwned();
+  }
+}
+
+function saveOwned(){
+  localStorage.setItem("acg-owned", JSON.stringify([...owned]));
+}
+
+function loadUses(){
+  try{
+    const raw = localStorage.getItem("acg-uses");
+    if(!raw){ acgUses = {}; return; }
+    const obj = JSON.parse(raw);
+    if(obj && typeof obj === "object" && !Array.isArray(obj)){
+      const next = {};
+      Object.keys(obj).forEach(id => {
+        const arr = obj[id];
+        if(Array.isArray(arr)){
+          next[String(id)] = arr.map(String).filter(u => USES.some(x => x.id === u));
+        }
+      });
+      acgUses = next;
+    } else {
+      acgUses = {};
+    }
+  }catch(e){ acgUses = {}; }
+}
+
+function saveUses(){
+  localStorage.setItem("acg-uses", JSON.stringify(acgUses));
+}
+
+function getUses(id){
+  const arr = acgUses[String(id)];
+  return Array.isArray(arr) ? arr.slice() : [];
+}
+
+function toggleUse(id, useId){
+  id = String(id);
+  const cur = new Set(getUses(id));
+  if(cur.has(useId)) cur.delete(useId); else cur.add(useId);
+  const next = USES.map(u => u.id).filter(u => cur.has(u));
+  if(next.length) acgUses[id] = next; else delete acgUses[id];
+  saveUses();
+  render();
+}
+
+function loadLooks(){
+  try{
+    const arr = JSON.parse(localStorage.getItem("acg-looks") || "[]");
+    savedLooks = Array.isArray(arr) ? arr : [];
+  }catch(e){ savedLooks = []; }
+}
+
+function saveLooks(){
+  localStorage.setItem("acg-looks", JSON.stringify(savedLooks));
+}
+
+function byId(id){ return acgList.find(p => String(p.id) === String(id)); }
+
+function toggleOwn(id){
+  id = String(id);
+  if(owned.has(id)) owned.delete(id); else owned.add(id);
+  saveOwned();
+  render();
+}
+
+function openMenu(){
+  drawer.hidden = false; scrim.hidden = false;
+  document.getElementById("menuBtn").classList.add("active");
+  requestAnimationFrame(() => { drawer.classList.add("on"); scrim.classList.add("on"); });
+}
+function closeMenu(){
+  drawer.classList.remove("on"); scrim.classList.remove("on");
+  document.getElementById("menuBtn").classList.remove("active");
+  setTimeout(() => { drawer.hidden = true; scrim.hidden = true; }, 220);
+}
+
+function setNav(id){
+  const y = window.scrollY || window.pageYOffset || 0;
+  active = id;
+  closeMenu();
+  render();
+  // Keep viewport stable on tab switch (avoid scroll-to-top / anchoring jank)
+  const restore = () => { window.scrollTo(0, y); };
+  restore();
+  requestAnimationFrame(() => {
+    restore();
+    requestAnimationFrame(restore);
+  });
+}
+
+document.getElementById("siteLogo").addEventListener("click", () => setNav("mylist"));
+document.getElementById("menuBtn").addEventListener("click", openMenu);
+document.getElementById("drawerClose").addEventListener("click", closeMenu);
+scrim.addEventListener("click", closeMenu);
+drawer.addEventListener("click", e => {
+  const b = e.target.closest("[data-nav]");
+  if(!b) return;
+  e.preventDefault();
+  b.blur();
+  setNav(b.dataset.nav);
+});
+lookbookNav.addEventListener("click", e => {
+  const b = e.target.closest("[data-nav]");
+  if(!b) return;
+  e.preventDefault();
+  b.blur();
+  setNav(b.dataset.nav);
+});
+sortBtn.addEventListener("click", () => { sortPrice = !sortPrice; render(); });
+
+chips.addEventListener("click", e => {
+  const b = e.target.closest("[data-filter]");
+  if(!b) return;
+  acgFilter = b.dataset.filter;
+  render();
+});
+useChips.addEventListener("click", e => {
+  const b = e.target.closest("[data-use-filter]");
+  if(!b) return;
+  useFilter = b.dataset.useFilter;
+  render();
+});
+
+function useIconSpan(useId){
+  const icon = USE_ICONS[useId];
+  if(!icon) return "";
+  return `<span class="ui" aria-hidden="true">${icon}</span>`;
+}
+
+function useLabelsHtml(uses){
+  if(!uses || !uses.length) return "";
+  return `<div class="use-labels">${uses.map(u => {
+    const lab = (USES.find(x => x.id === u) || {}).label || u;
+    return `<span class="ul">${useIconSpan(u)}<span>${lab}</span></span>`;
+  }).join("")}</div>`;
+}
+
+function useTogglesHtml(id, uses){
+  const set = new Set(uses || []);
+  return `<div class="use-toggles">${USES.map(u => {
+    const on = set.has(u.id);
+    return `<button type="button" data-use-toggle="${u.id}" data-use-id="${id}" class="${on?"on":""}" aria-pressed="${on}">${useIconSpan(u.id)}<span>${u.label}</span></button>`;
+  }).join("")}</div>`;
+}
+
+function makeProductCard(p, opts={}){
+  const el = document.createElement("article");
+  el.className = "card";
+  const priceHtml = formatWon(p.price);
+  const model = (p.model != null && p.model !== "") ? String(p.model) : extractModel(p);
+  const img = p.nukki
+    ? `<img src="${p.nukki}" alt="${p.name}" loading="lazy"/>`
+    : (p.thumbnail_url
+      ? `<img src="${p.thumbnail_url}" alt="${p.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:'ACG'}))"/>`
+      : `<div class="ph">ACG</div>`);
+  let extra = "";
+  if(opts.ownToggle){
+    const on = owned.has(String(p.id));
+    extra += `<button type="button" class="own-btn${on?" on":""}" data-own="${p.id}">${on?"OWNED":"OWN"}</button>`;
+  }
+  if(opts.useAssign && p.id != null){
+    const uses = getUses(p.id);
+    extra += useTogglesHtml(p.id, uses);
+  } else if(opts.showUses && p.id != null){
+    extra += useLabelsHtml(getUses(p.id));
+  }
+  if(opts.pick){
+    const on = opts.picked;
+    extra += `<button type="button" class="pick-btn${on?" on":""}" data-pick="${p.id}" data-pick-role="${opts.pickRole||"member"}">${on?"SELECTED":"SELECT"}</button>`;
+  }
+  const modelHtml = model ? `<div class="model">${model}</div>` : "";
+  el.innerHTML = `
+    <div class="imgwrap">${img}</div>
+    <div class="row">
+      <div class="name">${p.name}</div>
+      ${modelHtml}
+      <div class="price">${priceHtml}</div>
+      ${extra}
+    </div>`;
+  return el;
+}
+
+function renderTrailLike(list){
+  grid.innerHTML = "";
+  if(!list.length){
+    grid.innerHTML = `<div class="empty">No items yet</div>`;
+    return;
+  }
+  const map = new Map();
+  list.forEach(p => {
+    const key = p.lookId || ("solo:" + p.name);
+    if(!map.has(key)) map.set(key, []);
+    map.get(key).push(p);
+  });
+  map.forEach((products, key) => {
+    const lookId = key.startsWith("solo:") ? null : key;
+    if(lookId && looks[lookId]){
+      const look = looks[lookId];
+      const wear = document.createElement("article");
+      wear.className = "card wear-card";
+      wear.innerHTML = `
+        <div class="imgwrap wear">
+          <div class="wear-stage">
+            <img class="wear-quad-full" src="${look.quad}" alt="${look.label} 4-angle"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="name">${look.label} <span style="color:var(--mute)">/ WEAR</span></div>
+          <div class="price">${formatWon(lookTotal(products))}</div>
+        </div>`;
+      grid.appendChild(wear);
+    }
+    products.forEach(p => {
+      const card = Object.assign({}, p, { model: p.color || p.model || "" });
+      grid.appendChild(makeProductCard(card));
+    });
+  });
+}
+
+function renderAcgCards(list, opts){
+  grid.innerHTML = "";
+  if(!list.length){
+    grid.innerHTML = `<div class="empty">${opts.empty || "No items"}</div>`;
+    return;
+  }
+  list.forEach(p => {
+    const card = {
+      id: p.id,
+      name: shortName(p),
+      model: extractModel(p),
+      price: p.retail_price,
+      thumbnail_url: p.thumbnail_url,
+      nukki: null
+    };
+    grid.appendChild(makeProductCard(card, opts));
+  });
+}
+
+function renderChips(){
+  if(active !== "acg"){
+    chips.hidden = true;
+    useChips.hidden = true;
+    chips.innerHTML = "";
+    useChips.innerHTML = "";
+    return;
+  }
+  useChips.hidden = false;
+  chips.hidden = false;
+
+  const useEntries = [["all", "전체"], ...USES.map(u => [u.id, u.label])];
+  useChips.innerHTML = useEntries.map(([id,lab]) => {
+    let count = "";
+    if(id !== "all"){
+      count = " " + acgList.filter(p => getUses(p.id).includes(id)).length;
+    }
+    const ico = (id !== "all" && USE_ICONS[id])
+      ? `<span class="chip-ico" aria-hidden="true">${USE_ICONS[id]}</span>`
+      : "";
+    return `<button type="button" data-use-filter="${id}" class="${useFilter===id?"on":""}">${ico}${lab}${count}</button>`;
+  }).join("");
+
+  const entries = [["all", `전체 ${acgList.length}`], ...categoryOrder.map(c => [c, `${categoryLabels[c]||c}`])];
+  chips.innerHTML = entries.map(([id,lab]) => {
+    const count = id === "all" ? "" : ` ${acgList.filter(p=>p.category===id).length}`;
+    const label = id === "all" ? lab : lab + count;
+    return `<button type="button" data-filter="${id}" class="${acgFilter===id?"on":""}">${label}</button>`;
+  }).join("");
+}
+
+function renderBuilder(){
+  builder.hidden = false;
+  grid.hidden = true;
+  chips.hidden = true;
+  useChips.hidden = true;
+  sortBtn.style.visibility = "hidden";
+
+  if(!owned.size){
+    builder.innerHTML = `<div class="empty">조합은 보유 아이템만 쓸 수 있어요.<br/>ACG List에서 OWN으로 표시하세요.</div>`;
+    return;
+  }
+
+  let html = `<div class="panel"><h3>시작점</h3><div class="starter-row">`;
+  html += STARTERS.map(c => `<button type="button" data-start="${c}" class="${startType===c?"on":""}">${categoryLabels[c]||c}</button>`).join("");
+  html += `</div></div>`;
+
+  if(!startType){
+    builder.innerHTML = html + `<div class="empty">신발 · 가방 · 아우터 중 하나로 시작하세요.</div>`;
+    return;
+  }
+
+  const starters = acgList.filter(p => owned.has(String(p.id)) && p.category === startType);
+  html += `<div class="panel" id="starterPanel"><h3>시작 아이템</h3>`;
+  if(!starters.length){
+    html += `<div class="empty">이 시작점의 보유 아이템이 없습니다.</div></div>`;
+    builder.innerHTML = html;
+    return;
+  }
+  html += `<div class="grid" id="starterGrid"></div></div>`;
+
+  if(starterId){
+    const past = savedLooks.filter(l => l.starter_id === starterId).sort((a,b)=>b.ts-a.ts);
+    if(past.length){
+      html += `<div class="panel"><h3>이전 코디</h3>`;
+      past.forEach(l => {
+        const ids = [l.starter_id, ...(l.member_ids||[])];
+        const names = ids.map(id => { const p=byId(id); return p?shortName(p):id; }).join(" · ");
+        html += `<div class="saved-look"><div class="meta">${new Date(l.ts).toLocaleString("ko-KR")}</div><div>${names}</div>${l.note?`<div class="meta">${l.note}</div>`:""}<div class="action-row"><button type="button" data-open="${l.id}">다시 열기</button></div></div>`;
+      });
+      html += `</div>`;
+    }
+    html += `<div class="panel" id="memberPanel"><h3>같이 입을 아이템</h3><div class="grid" id="memberGrid"></div>
+      <textarea class="note" id="note" placeholder="메모">${note.replace(/</g,"&lt;")}</textarea>
+      <div class="action-row"><button type="button" class="primary" id="saveLook">코디 저장</button></div>
+    </div>`;
+  }
+
+  builder.innerHTML = html;
+
+  const sg = document.getElementById("starterGrid");
+  starters.forEach(p => {
+    sg.appendChild(makeProductCard({
+      id:p.id, name:shortName(p), model:extractModel(p), price:p.retail_price, thumbnail_url:p.thumbnail_url
+    }, { pick:true, picked: starterId===String(p.id), pickRole:"starter", showUses:true }));
+  });
+
+  const mg = document.getElementById("memberGrid");
+  if(mg){
+    const others = acgList.filter(p => owned.has(String(p.id)) && String(p.id) !== String(starterId));
+    if(!others.length){
+      mg.innerHTML = `<div class="empty">다른 보유 아이템이 없습니다.</div>`;
+    } else {
+      others.forEach(p => {
+        mg.appendChild(makeProductCard({
+          id:p.id, name:shortName(p), model:extractModel(p), price:p.retail_price, thumbnail_url:p.thumbnail_url
+        }, { pick:true, picked: members.has(String(p.id)), pickRole:"member", showUses:true }));
+      });
+    }
+  }
+}
+
+function render(){
+  const cat = NAV.find(c => c.id === active) || NAV[2];
+  title.textContent = cat.title;
+  crumb.textContent = cat.crumb;
+  [...drawer.querySelectorAll("[data-nav]")].forEach(b => b.classList.toggle("on", b.dataset.nav === active));
+  [...lookbookNav.querySelectorAll("[data-nav]")].forEach(b => b.classList.toggle("on", b.dataset.nav === active));
+
+  builder.hidden = true;
+  grid.hidden = false;
+  sortBtn.style.visibility = (active === "coord") ? "hidden" : "visible";
+
+  if(active === "coord"){
+    renderBuilder();
+    return;
+  }
+
+  renderChips();
+
+  if(active === "trail" || active === "hike" || active === "trek"){
+    let list = (activityItems[active] || []).slice();
+    if(sortPrice) list.sort((a,b) => (Number(a.price)||0) - (Number(b.price)||0));
+    renderTrailLike(list);
+    return;
+  }
+
+  if(active === "mylist"){
+    let list = acgList.filter(p => owned.has(String(p.id)));
+    if(sortPrice) list.sort((a,b) => (Number(a.retail_price)||0) - (Number(b.retail_price)||0));
+    renderAcgCards(list, {
+      ownToggle: true,
+      useAssign: true,
+      empty: "보유 아이템이 없습니다.<br/>ACG List에서 OWN을 눌러 추가하세요."
+    });
+    return;
+  }
+
+  if(active === "acg"){
+    let list = acgList.filter(p => {
+      if(acgFilter !== "all" && p.category !== acgFilter) return false;
+      if(useFilter !== "all" && !getUses(p.id).includes(useFilter)) return false;
+      return true;
+    });
+    if(sortPrice) list.sort((a,b) => (Number(a.retail_price)||0) - (Number(b.retail_price)||0));
+    renderAcgCards(list, { ownToggle: true, useAssign: true, empty: "No items" });
+  }
+}
+
+document.body.addEventListener("click", e => {
+  const useT = e.target.closest("[data-use-toggle]");
+  if(useT){
+    toggleUse(useT.dataset.useId, useT.dataset.useToggle);
+    return;
+  }
+
+  const own = e.target.closest("[data-own]");
+  if(own){ toggleOwn(own.dataset.own); return; }
+
+  const pick = e.target.closest("[data-pick]");
+  if(pick){
+    const id = String(pick.dataset.pick);
+    const role = pick.dataset.pickRole;
+    if(role === "starter"){
+      starterId = id; members = new Set(); note = "";
+    } else {
+      if(members.has(id)) members.delete(id); else members.add(id);
+    }
+    render();
+    return;
+  }
+
+  const start = e.target.closest("[data-start]");
+  if(start){
+    startType = start.dataset.start;
+    starterId = null; members = new Set(); note = "";
+    render();
+    return;
+  }
+
+  if(e.target.id === "saveLook"){
+    const ta = document.getElementById("note");
+    note = ta ? ta.value : note;
+    if(!starterId) return;
+    const look = {
+      id: "l" + Date.now(),
+      starter_id: String(starterId),
+      member_ids: [...members].map(String),
+      note,
+      ts: Date.now()
+    };
+    savedLooks.push(look);
+    saveLooks();
+    render();
+    return;
+  }
+
+  const open = e.target.closest("[data-open]");
+  if(open){
+    const l = savedLooks.find(x => x.id === open.dataset.open);
+    if(!l) return;
+    starterId = String(l.starter_id);
+    members = new Set((l.member_ids||[]).map(String));
+    note = l.note || "";
+    const p = byId(starterId);
+    if(p) startType = p.category;
+    render();
+  }
+});
+
+loadOwned();
+loadUses();
+loadLooks();
+
+fetch("./acg-lookbook-handoff.json", { cache: "no-store" })
+  .then(r => {
+    if(!r.ok) throw new Error("handoff " + r.status);
+    return r.json();
+  })
+  .then(data => {
+    acgList = Array.isArray(data.acg_list) ? data.acg_list : [];
+    if(Array.isArray(data.category_order) && data.category_order.length) categoryOrder = data.category_order;
+    if(data.category_labels) categoryLabels = Object.assign({}, categoryLabels, data.category_labels);
+    seedOwned(data.owned_ids || []);
+    render();
+  })
+  .catch(err => {
+    console.error(err);
+    grid.innerHTML = `<div class="empty">Failed to load catalog</div>`;
+  });
+
+render();
+window.addEventListener("resize", (() => {
+  let t; return () => { clearTimeout(t); t = setTimeout(() => { if(active==="trail"||active==="hike"||active==="trek") render(); }, 200); };
+})());
+</script>
+</body>
+</html>
